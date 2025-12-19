@@ -2,14 +2,53 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>SYSTEM</title>
+<title>Hunter System</title>
 
 <style>
+:root{
+ --bg:#050b14;
+ --panel:#0b1625;
+ --accent:#1e90ff;
+ --text:#e6f0ff;
+}
 body{
  margin:0;
  font-family:Arial, sans-serif;
- background:#050b14;
- color:#e6f0ff;
+ background:var(--bg);
+ color:var(--text);
+}
+.hidden{display:none}
+button{
+ background:var(--accent);
+ border:none;
+ color:white;
+ padding:10px;
+ border-radius:8px;
+ width:100%;
+ margin-top:6px;
+}
+input{
+ width:100%;
+ padding:8px;
+ border-radius:6px;
+ border:none;
+ margin-top:6px;
+}
+.card{
+ background:var(--panel);
+ border-radius:12px;
+ padding:12px;
+ margin:10px;
+}
+.bar{
+ height:6px;
+ background:#02060d;
+ border-radius:10px;
+ overflow:hidden;
+}
+.fill{
+ height:100%;
+ background:linear-gradient(90deg,#1e90ff,#6ea8ff);
 }
 nav{
  display:flex;
@@ -17,132 +56,137 @@ nav{
  background:#09121f;
  padding:10px;
 }
-nav button{
- background:none;
- border:none;
- color:#6ea8ff;
- font-size:14px;
+nav button{width:auto;background:none;color:#6ea8ff}
+.stat{
+ margin-top:8px;
 }
-.page{display:none;padding:15px}
-.active{display:block}
-.box{
- background:#0b1625;
- border:1px solid #1e90ff;
- border-radius:10px;
- padding:10px;
- margin-bottom:10px;
-}
-button{
- width:100%;
- padding:8px;
- margin-top:5px;
- background:#1e90ff;
- border:none;
- border-radius:6px;
- color:white;
-}
-input{
- width:100%;
- padding:6px;
- margin-top:4px;
- border-radius:5px;
- border:none;
-}
+.small{font-size:12px;opacity:.8}
 .quest{
  display:flex;
  justify-content:space-between;
  align-items:center;
- margin:5px 0;
- padding:6px;
+ margin-top:6px;
  background:#02060d;
+ padding:6px;
  border-radius:6px;
 }
 .done{opacity:.5;text-decoration:line-through}
-
-.rank-overlay{
- position:fixed;inset:0;
- display:none;
- justify-content:center;
- align-items:center;
- background:rgba(0,0,0,.9);
- z-index:99;
- flex-direction:column;
-}
-.rank-overlay h1{
- font-size:80px;
- animation:pulse 1.2s infinite;
-}
-@keyframes pulse{
- 0%{transform:scale(1)}
- 50%{transform:scale(1.3)}
- 100%{transform:scale(1)}
-}
+.center{text-align:center}
 </style>
 </head>
 
 <body>
 
-<audio id="rankSound" src="rank.mp3"></audio>
-
-<div id="rankOverlay" class="rank-overlay">
- <h1 id="rankBig">D</h1>
- <div>SYSTEM RANK UP</div>
+<!-- AWAKENING -->
+<div id="awakening" class="card">
+ <h2 class="center">AWAKENING</h2>
+ <input id="hunterName" placeholder="Hunter Name">
+ <button onclick="awaken()">AWAKEN</button>
 </div>
 
-<div class="box">
- Level: <b id="level">1</b> |
- Rank: <b id="rank">E</b> |
- XP: <b id="xp">0</b>
+<!-- HOME -->
+<div id="home" class="hidden">
+ <div class="card">
+  <h2 id="profileName"></h2>
+  Rank: <b id="rank"></b> | Level: <b id="level"></b>
+  <div class="bar"><div id="xpFill" class="fill"></div></div>
+ </div>
+
+ <div class="card">
+  <h3>STATS</h3>
+  <div id="stats"></div>
+  <input id="newStat" placeholder="Add custom stat (optional)">
+  <button onclick="addStat()">Add Stat</button>
+ </div>
+
+ <div class="card" onclick="openPage('strength')">
+  <h3>Strength Chamber</h3>
+  <div class="small">Workout quests</div>
+ </div>
+
+ <div class="card" onclick="openPage('vitality')">
+  <h3>Vitality Chamber</h3>
+  <div class="small">Life & recovery</div>
+ </div>
+
+ <div class="card" onclick="openPage('discipline')">
+  <h3>Discipline Chamber</h3>
+  <div class="small">Habits & rituals</div>
+ </div>
 </div>
 
-<nav>
+<!-- STRENGTH -->
+<div id="strength" class="hidden">
+ <div class="card">
+  <h3>Strength Chamber</h3>
+  <input id="sText" placeholder="Workout quest">
+  <input id="sXP" type="number" placeholder="XP">
+  <button onclick="addQuest('strength')">Add Quest</button>
+  <div id="strengthList"></div>
+ </div>
+</div>
+
+<!-- VITALITY -->
+<div id="vitality" class="hidden">
+ <div class="card">
+  <h3>Vitality Chamber</h3>
+  <input id="vText" placeholder="Daily task">
+  <input id="vXP" type="number" placeholder="XP">
+  <button onclick="addQuest('vitality')">Add Task</button>
+  <div id="vitalityList"></div>
+ </div>
+</div>
+
+<!-- DISCIPLINE -->
+<div id="discipline" class="hidden">
+ <div class="card">
+  <h3>Discipline Chamber</h3>
+  <input id="dText" placeholder="Habit / Ritual">
+  <input id="dXP" type="number" placeholder="XP">
+  <button onclick="addQuest('discipline')">Add Habit</button>
+  <div id="disciplineList"></div>
+ </div>
+</div>
+
+<nav id="nav" class="hidden">
+ <button onclick="openPage('home')">Home</button>
  <button onclick="openPage('strength')">Strength</button>
  <button onclick="openPage('vitality')">Vitality</button>
  <button onclick="openPage('discipline')">Discipline</button>
 </nav>
 
-<!-- STRENGTH -->
-<div id="strength" class="page active">
- <h3>Strength Chamber</h3>
- <input id="sQuest" placeholder="Workout quest">
- <input id="sXP" type="number" placeholder="XP">
- <button onclick="addQuest('strength')">Add Quest</button>
- <div id="strengthList"></div>
-</div>
-
-<!-- VITALITY -->
-<div id="vitality" class="page">
- <h3>Vitality Chamber</h3>
- <input id="vQuest" placeholder="Daily task / gratitude / todo">
- <input id="vXP" type="number" placeholder="XP">
- <button onclick="addQuest('vitality')">Add Quest</button>
- <div id="vitalityList"></div>
-</div>
-
-<!-- DISCIPLINE -->
-<div id="discipline" class="page">
- <h3>Discipline Chamber</h3>
- <input id="dQuest" placeholder="Habit">
- <input id="dXP" type="number" placeholder="XP">
- <button onclick="addQuest('discipline')">Add Habit</button>
- <div id="disciplineList"></div>
-</div>
-
 <script>
-/* SAFE SYSTEM VOICE */
-function systemSpeak(t){
- if(!("speechSynthesis" in window)) return;
- let u=new SpeechSynthesisUtterance(t);
- u.rate=.85;u.pitch=.7;
- speechSynthesis.cancel();
- speechSynthesis.speak(u);
+/* ===== DATA ===== */
+let data=JSON.parse(localStorage.getItem("system"))||{
+ name:"",
+ xp:0,
+ stats:{
+  Strength:{xp:0},
+  Vitality:{xp:0},
+  Discipline:{xp:0}
+ },
+ quests:{strength:[],vitality:[],discipline:[]},
+ lastDay:""
+};
+
+/* ===== DAILY RESET ===== */
+let today=new Date().toDateString();
+if(data.lastDay!==today){
+ Object.values(data.quests).forEach(qs=>qs.forEach(q=>q.done=false));
+ data.lastDay=today;
+ save();
 }
 
-/* CORE */
-let xp=+localStorage.getItem("xp")||0;
-let quests=JSON.parse(localStorage.getItem("quests")||"{}");
+/* ===== AWAKEN ===== */
+function awaken(){
+ let n=hunterName.value.trim();
+ if(!n)return;
+ data.name=n;
+ save();
+ init();
+}
 
-/* RANK */
+/* ===== RANK ===== */
 function rankFromLevel(l){
  if(l>=90)return"MONARCH";
  if(l>=80)return"EMPEROR";
@@ -156,77 +200,88 @@ function rankFromLevel(l){
  return"E";
 }
 
-/* QUEST */
+/* ===== XP ===== */
+function addXP(v){
+ data.xp+=v;
+ save();
+}
+
+/* ===== STATS ===== */
+function statLevel(xp){return Math.floor(xp/50)+1}
+function addStat(){
+ let n=newStat.value.trim();
+ if(!n||data.stats[n])return;
+ data.stats[n]={xp:0};
+ save();render();
+}
+
+/* ===== QUESTS ===== */
 function addQuest(type){
- let text=document.getElementById(type[0]+"Quest").value;
- let qxp=+document.getElementById(type[0]+"XP").value||10;
- if(!text) return;
-
- quests[type]=quests[type]||[];
- quests[type].push({text,xp:qxp,done:false});
- save();
- render();
+ let t=document.getElementById(type[0]+"Text").value;
+ let xp=+document.getElementById(type[0]+"XP").value||10;
+ if(!t)return;
+ data.quests[type].push({t,xp,done:false});
+ save();render();
 }
-
-/* COMPLETE */
 function toggleQuest(type,i){
- let q=quests[type][i];
- q.done=!q.done;
- if(q.done) gainXP(q.xp);
- save();
- render();
+ let q=data.quests[type][i];
+ if(q.done)return;
+ q.done=true;
+ addXP(q.xp);
+ data.stats[type.charAt(0).toUpperCase()+type.slice(1)].xp+=q.xp;
+ save();render();
 }
 
-/* XP */
-function gainXP(v){
- let oldRank=rankFromLevel(Math.floor((xp-v)/100)+1);
- xp+=v;
- let newRank=rankFromLevel(Math.floor(xp/100)+1);
- if(oldRank!==newRank) rankUp(newRank);
-}
-
-/* RANK UP */
-function rankUp(r){
- document.getElementById("rankBig").innerText=r;
- document.getElementById("rankOverlay").style.display="flex";
- document.getElementById("rankSound").play();
- systemSpeak("Rank updated to "+r);
- setTimeout(()=>rankOverlay.style.display="none",2500);
-}
-
-/* RENDER */
+/* ===== RENDER ===== */
 function render(){
- ["strength","vitality","discipline"].forEach(t=>{
-  let div=document.getElementById(t+"List");
-  div.innerHTML="";
-  (quests[t]||[]).forEach((q,i)=>{
-   let d=document.createElement("div");
-   d.className="quest"+(q.done?" done":"");
-   d.innerHTML=`${q.text} (+${q.xp}) <button onclick="toggleQuest('${t}',${i})">✓</button>`;
-   div.appendChild(d);
-  });
+ profileName.innerText=data.name;
+ let level=Math.floor(data.xp/100)+1;
+ rank.innerText=rankFromLevel(level);
+ levelEl.innerText=level;
+ xpFill.style.width=(data.xp%100)+"%";
+
+ stats.innerHTML="";
+ Object.entries(data.stats).forEach(([k,v])=>{
+  let d=document.createElement("div");
+  d.className="stat";
+  d.innerHTML=`
+   ${k} Lv ${statLevel(v.xp)}
+   <div class="bar"><div class="fill" style="width:${v.xp%50*2}%"></div></div>
+  `;
+  stats.appendChild(d);
  });
 
- let level=Math.floor(xp/100)+1;
- document.getElementById("level").innerText=level;
- document.getElementById("rank").innerText=rankFromLevel(level);
- document.getElementById("xp").innerText=xp;
+ ["strength","vitality","discipline"].forEach(t=>{
+  let l=document.getElementById(t+"List");
+  l.innerHTML="";
+  data.quests[t].forEach((q,i)=>{
+   let d=document.createElement("div");
+   d.className="quest"+(q.done?" done":"");
+   d.innerHTML=`${q.t} (+${q.xp}) <button onclick="toggleQuest('${t}',${i})">✓</button>`;
+   l.appendChild(d);
+  });
+ });
 }
 
-/* SAVE */
-function save(){
- localStorage.setItem("xp",xp);
- localStorage.setItem("quests",JSON.stringify(quests));
-}
-
-/* NAV */
+/* ===== NAV ===== */
 function openPage(p){
- document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
- document.getElementById(p).classList.add("active");
+ ["home","strength","vitality","discipline"].forEach(x=>document.getElementById(x).classList.add("hidden"));
+ document.getElementById(p).classList.remove("hidden");
 }
 
-/* INIT */
-render();
+/* ===== SAVE ===== */
+function save(){
+ localStorage.setItem("system",JSON.stringify(data));
+}
+
+/* ===== INIT ===== */
+function init(){
+ awakening.classList.add("hidden");
+ home.classList.remove("hidden");
+ nav.classList.remove("hidden");
+ render();
+}
+if(data.name) init();
 </script>
 
 </body>
