@@ -1,127 +1,286 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Hunter System</title>
 
 <style>
 :root{
  --bg:#050b14;
- --panel:#0b1625;
- --accent:#1e90ff;
+ --panel:#0c1626;
+ --panel-soft:#0f1c30;
+ --accent:#3b82f6;
+ --accent-soft:#6ea8ff;
  --text:#e6f0ff;
+ --muted:#9fb3d9;
 }
+
+*{box-sizing:border-box}
+
 body{
  margin:0;
- font-family:Arial, sans-serif;
  background:var(--bg);
  color:var(--text);
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,sans-serif;
 }
-.hidden{display:none}
-button{
- background:var(--accent);
- border:none;
- color:white;
- padding:10px;
- border-radius:8px;
- width:100%;
- margin-top:6px;
+
+/* ---------- LAYOUT ---------- */
+.app{
+ max-width:480px;
+ margin:0 auto;
+ min-height:100vh;
+ display:flex;
+ flex-direction:column;
 }
-input{
- width:100%;
- padding:8px;
- border-radius:6px;
- border:none;
- margin-top:6px;
+
+header{
+ position:sticky;
+ top:0;
+ z-index:10;
+ background:linear-gradient(180deg,#091224,#050b14);
+ padding:14px 16px 10px;
 }
+
+.tabs{
+ display:flex;
+ gap:14px;
+ font-size:14px;
+ margin-top:10px;
+}
+
+.tab{
+ color:var(--muted);
+ padding-bottom:6px;
+ border-bottom:2px solid transparent;
+ cursor:pointer;
+}
+
+.tab.active{
+ color:var(--text);
+ border-color:var(--accent);
+}
+
+/* ---------- CARDS ---------- */
 .card{
  background:var(--panel);
- border-radius:12px;
- padding:12px;
- margin:10px;
+ border-radius:16px;
+ padding:14px;
+ margin:12px 12px 0;
+ box-shadow:0 8px 24px rgba(0,0,0,.3);
 }
-.bar{
+
+.card.soft{
+ background:var(--panel-soft);
+}
+
+.section-title{
+ font-size:13px;
+ letter-spacing:.08em;
+ color:var(--muted);
+ margin-bottom:10px;
+}
+
+/* ---------- PROFILE ---------- */
+.profile-name{
+ font-size:20px;
+ font-weight:600;
+}
+
+.profile-sub{
+ font-size:13px;
+ color:var(--muted);
+ margin-top:2px;
+}
+
+.xp-bar{
+ height:8px;
+ background:#02060d;
+ border-radius:99px;
+ overflow:hidden;
+ margin-top:10px;
+}
+
+.xp-fill{
+ height:100%;
+ background:linear-gradient(90deg,var(--accent),var(--accent-soft));
+ transition:width .4s ease;
+}
+
+/* ---------- STATS ---------- */
+.stat{
+ margin-top:10px;
+}
+
+.stat-row{
+ display:flex;
+ justify-content:space-between;
+ font-size:13px;
+}
+
+.stat-name{color:var(--text)}
+.stat-lv{color:var(--muted)}
+
+.stat-bar{
  height:6px;
  background:#02060d;
- border-radius:10px;
+ border-radius:99px;
  overflow:hidden;
+ margin-top:4px;
 }
-.fill{
+
+.stat-fill{
  height:100%;
- background:linear-gradient(90deg,#1e90ff,#6ea8ff);
+ background:linear-gradient(90deg,#60a5fa,#93c5fd);
 }
-nav{
+
+/* ---------- CHAMBERS ---------- */
+.chamber{
  display:flex;
- justify-content:space-around;
- background:#09121f;
- padding:10px;
+ justify-content:space-between;
+ align-items:center;
+ padding:14px;
+ border-radius:14px;
+ background:linear-gradient(135deg,#0c1626,#0b1422);
+ margin-top:12px;
+ cursor:pointer;
 }
-nav button{width:auto;background:none;color:#6ea8ff}
-.stat{
- margin-top:8px;
+
+.chamber-title{
+ font-size:16px;
+ font-weight:500;
 }
-.small{font-size:12px;opacity:.8}
+
+.chamber-sub{
+ font-size:12px;
+ color:var(--muted);
+}
+
+/* ---------- INPUT ---------- */
+input{
+ width:100%;
+ padding:12px;
+ border-radius:12px;
+ border:none;
+ outline:none;
+ background:#02060d;
+ color:var(--text);
+ margin-top:10px;
+}
+
+button{
+ width:100%;
+ padding:12px;
+ margin-top:10px;
+ border:none;
+ border-radius:12px;
+ background:linear-gradient(90deg,var(--accent),var(--accent-soft));
+ color:white;
+ font-weight:500;
+ cursor:pointer;
+}
+
+/* ---------- QUEST ---------- */
 .quest{
  display:flex;
  justify-content:space-between;
  align-items:center;
- margin-top:6px;
  background:#02060d;
- padding:6px;
- border-radius:6px;
+ padding:10px 12px;
+ border-radius:12px;
+ margin-top:8px;
+ font-size:14px;
 }
-.done{opacity:.5;text-decoration:line-through}
+
+.quest.done{
+ opacity:.5;
+ text-decoration:line-through;
+}
+
+/* ---------- UTIL ---------- */
+.hidden{display:none}
 .center{text-align:center}
+.small{font-size:12px;color:var(--muted)}
 </style>
 </head>
 
 <body>
 
+<div class="app">
+
 <!-- AWAKENING -->
 <div id="awakening" class="card">
- <h2 class="center">AWAKENING</h2>
- <input id="hunterName" placeholder="Hunter Name">
- <button onclick="awaken()">AWAKEN</button>
+ <div class="center">
+  <h2>AWAKENING</h2>
+  <p class="small">Enter your Hunter identity</p>
+ </div>
+ <input id="hunterName" placeholder="Hunter name"/>
+ <button onclick="awaken()">Awaken</button>
 </div>
 
-<!-- HOME -->
-<div id="home" class="hidden">
- <div class="card">
-  <h2 id="profileName"></h2>
-  Rank: <b id="rank"></b> | Level: <b id="level"></b>
-  <div class="bar"><div id="xpFill" class="fill"></div></div>
+<!-- HEADER -->
+<header id="header" class="hidden">
+ <div class="profile-name" id="profileName"></div>
+ <div class="profile-sub">
+  Rank <b id="rank"></b> · Level <b id="level"></b>
+ </div>
+ <div class="xp-bar">
+  <div class="xp-fill" id="xpFill"></div>
  </div>
 
+ <div class="tabs">
+  <div class="tab active" onclick="openPage('home',this)">Home</div>
+  <div class="tab" onclick="openPage('strength',this)">Strength</div>
+  <div class="tab" onclick="openPage('vitality',this)">Vitality</div>
+  <div class="tab" onclick="openPage('discipline',this)">Discipline</div>
+ </div>
+</header>
+
+<!-- HOME -->
+<div id="home">
  <div class="card">
-  <h3>STATS</h3>
+  <div class="section-title">STATS</div>
   <div id="stats"></div>
   <input id="newStat" placeholder="Add custom stat (optional)">
   <button onclick="addStat()">Add Stat</button>
  </div>
 
- <div class="card" onclick="openPage('strength')">
-  <h3>Strength Chamber</h3>
-  <div class="small">Workout quests</div>
- </div>
+ <div class="card soft">
+  <div class="section-title">CHAMBERS</div>
 
- <div class="card" onclick="openPage('vitality')">
-  <h3>Vitality Chamber</h3>
-  <div class="small">Life & recovery</div>
- </div>
+  <div class="chamber" onclick="go('strength')">
+   <div>
+    <div class="chamber-title">Strength</div>
+    <div class="chamber-sub">Workouts & power</div>
+   </div>
+   →
+  </div>
 
- <div class="card" onclick="openPage('discipline')">
-  <h3>Discipline Chamber</h3>
-  <div class="small">Habits & rituals</div>
+  <div class="chamber" onclick="go('vitality')">
+   <div>
+    <div class="chamber-title">Vitality</div>
+    <div class="chamber-sub">Sleep & recovery</div>
+   </div>
+   →
+  </div>
+
+  <div class="chamber" onclick="go('discipline')">
+   <div>
+    <div class="chamber-title">Discipline</div>
+    <div class="chamber-sub">Habits & rituals</div>
+   </div>
+   →
+  </div>
  </div>
 </div>
 
 <!-- STRENGTH -->
 <div id="strength" class="hidden">
  <div class="card">
-  <h3>Strength Chamber</h3>
+  <div class="section-title">STRENGTH QUESTS</div>
   <input id="sText" placeholder="Workout quest">
   <input id="sXP" type="number" placeholder="XP">
-  <button onclick="addQuest('strength')">Add Quest</button>
+  <button onclick="addQuest('strength')">Add</button>
   <div id="strengthList"></div>
  </div>
 </div>
@@ -129,10 +288,10 @@ nav button{width:auto;background:none;color:#6ea8ff}
 <!-- VITALITY -->
 <div id="vitality" class="hidden">
  <div class="card">
-  <h3>Vitality Chamber</h3>
+  <div class="section-title">VITALITY TASKS</div>
   <input id="vText" placeholder="Daily task">
   <input id="vXP" type="number" placeholder="XP">
-  <button onclick="addQuest('vitality')">Add Task</button>
+  <button onclick="addQuest('vitality')">Add</button>
   <div id="vitalityList"></div>
  </div>
 </div>
@@ -140,44 +299,35 @@ nav button{width:auto;background:none;color:#6ea8ff}
 <!-- DISCIPLINE -->
 <div id="discipline" class="hidden">
  <div class="card">
-  <h3>Discipline Chamber</h3>
-  <input id="dText" placeholder="Habit / Ritual">
+  <div class="section-title">DISCIPLINE HABITS</div>
+  <input id="dText" placeholder="Habit / ritual">
   <input id="dXP" type="number" placeholder="XP">
-  <button onclick="addQuest('discipline')">Add Habit</button>
+  <button onclick="addQuest('discipline')">Add</button>
   <div id="disciplineList"></div>
  </div>
 </div>
 
-<nav id="nav" class="hidden">
- <button onclick="openPage('home')">Home</button>
- <button onclick="openPage('strength')">Strength</button>
- <button onclick="openPage('vitality')">Vitality</button>
- <button onclick="openPage('discipline')">Discipline</button>
-</nav>
+</div>
 
 <script>
 /* ===== DATA ===== */
 let data=JSON.parse(localStorage.getItem("system"))||{
  name:"",
  xp:0,
- stats:{
-  Strength:{xp:0},
-  Vitality:{xp:0},
-  Discipline:{xp:0}
- },
+ stats:{Strength:{xp:0},Vitality:{xp:0},Discipline:{xp:0}},
  quests:{strength:[],vitality:[],discipline:[]},
  lastDay:""
 };
 
-/* ===== DAILY RESET ===== */
+/* DAILY RESET */
 let today=new Date().toDateString();
 if(data.lastDay!==today){
- Object.values(data.quests).forEach(qs=>qs.forEach(q=>q.done=false));
+ Object.values(data.quests).forEach(q=>q.forEach(x=>x.done=false));
  data.lastDay=today;
  save();
 }
 
-/* ===== AWAKEN ===== */
+/* AWAKEN */
 function awaken(){
  let n=hunterName.value.trim();
  if(!n)return;
@@ -186,7 +336,7 @@ function awaken(){
  init();
 }
 
-/* ===== RANK ===== */
+/* RANK */
 function rankFromLevel(l){
  if(l>=90)return"MONARCH";
  if(l>=80)return"EMPEROR";
@@ -200,13 +350,7 @@ function rankFromLevel(l){
  return"E";
 }
 
-/* ===== XP ===== */
-function addXP(v){
- data.xp+=v;
- save();
-}
-
-/* ===== STATS ===== */
+/* STATS */
 function statLevel(xp){return Math.floor(xp/50)+1}
 function addStat(){
  let n=newStat.value.trim();
@@ -215,7 +359,7 @@ function addStat(){
  save();render();
 }
 
-/* ===== QUESTS ===== */
+/* QUESTS */
 function addQuest(type){
  let t=document.getElementById(type[0]+"Text").value;
  let xp=+document.getElementById(type[0]+"XP").value||10;
@@ -227,17 +371,17 @@ function toggleQuest(type,i){
  let q=data.quests[type][i];
  if(q.done)return;
  q.done=true;
- addXP(q.xp);
+ data.xp+=q.xp;
  data.stats[type.charAt(0).toUpperCase()+type.slice(1)].xp+=q.xp;
  save();render();
 }
 
-/* ===== RENDER ===== */
+/* RENDER */
 function render(){
  profileName.innerText=data.name;
  let level=Math.floor(data.xp/100)+1;
  rank.innerText=rankFromLevel(level);
- levelEl.innerText=level;
+ level.innerText=level;
  xpFill.style.width=(data.xp%100)+"%";
 
  stats.innerHTML="";
@@ -245,8 +389,13 @@ function render(){
   let d=document.createElement("div");
   d.className="stat";
   d.innerHTML=`
-   ${k} Lv ${statLevel(v.xp)}
-   <div class="bar"><div class="fill" style="width:${v.xp%50*2}%"></div></div>
+   <div class="stat-row">
+    <div class="stat-name">${k}</div>
+    <div class="stat-lv">Lv ${statLevel(v.xp)}</div>
+   </div>
+   <div class="stat-bar">
+    <div class="stat-fill" style="width:${(v.xp%50)*2}%"></div>
+   </div>
   `;
   stats.appendChild(d);
  });
@@ -263,22 +412,26 @@ function render(){
  });
 }
 
-/* ===== NAV ===== */
-function openPage(p){
+/* NAV */
+function openPage(p,el){
+ document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+ if(el) el.classList.add("active");
  ["home","strength","vitality","discipline"].forEach(x=>document.getElementById(x).classList.add("hidden"));
  document.getElementById(p).classList.remove("hidden");
 }
+function go(p){
+ openPage(p,[...document.querySelectorAll(".tab")].find(t=>t.textContent.toLowerCase()===p));
+}
 
-/* ===== SAVE ===== */
+/* SAVE */
 function save(){
  localStorage.setItem("system",JSON.stringify(data));
 }
 
-/* ===== INIT ===== */
+/* INIT */
 function init(){
  awakening.classList.add("hidden");
- home.classList.remove("hidden");
- nav.classList.remove("hidden");
+ header.classList.remove("hidden");
  render();
 }
 if(data.name) init();
