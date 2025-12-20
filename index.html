@@ -5,11 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Solo Leveling System</title>
 
+  <!-- CSS -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<!-- MOTIVATION SCREEN -->
+<!-- ======================
+     LANDING / MOTIVATION
+====================== -->
 <div id="landing" class="screen landing-screen active">
   <div class="mana-bg"></div>
   <div class="particles"></div>
@@ -24,42 +27,88 @@
   </div>
 </div>
 
-<!-- MODAL: BASIC INFO -->
+<!-- ======================
+     REGISTRATION MODAL
+====================== -->
 <div id="setupModal" class="modal hidden">
   <div class="modal-box">
     <h2>Hunter Registration</h2>
+
     <input id="nameInput" placeholder="Hunter Name">
     <input id="ageInput" type="number" placeholder="Age">
     <input id="weightInput" type="number" placeholder="Weight (kg)">
+
     <button id="nextToStats">Next</button>
   </div>
 </div>
 
-<!-- STAT SETUP -->
-<section id="statSetup" class="screen hidden">
+<!-- ======================
+     STAT SETUP SCREEN
+====================== -->
+<section id="statSetup" class="screen">
   <h2>Configure Your Stats</h2>
+  <p>Mandatory stats are already added. You may add more.</p>
 
-  <div id="statsList"></div>
-<script>
-  const startBtn = document.getElementById("startBtn");
-  const modal = document.getElementById("setupModal");
+  <div id="statsList">
+    <p>Strength</p>
+    <p>Vitality</p>
+    <p>Discipline</p>
+  </div>
 
-  startBtn.addEventListener("click", () => {
-    modal.classList.remove("hidden");
-  });
-</script>
   <input id="customStatInput" placeholder="Add custom stat (optional)">
   <button id="addStatBtn">Add Stat</button>
 
   <button id="finishSetup">Continue</button>
 </section>
 
-<!-- HOME (placeholder for now) -->
-<section id="home" class="screen hidden">
+<!-- ======================
+     HOME / PROFILE
+====================== -->
+<section id="home" class="screen">
   <h2>Hunter Profile</h2>
-  <p>Setup complete.</p>
+  <p>Setup complete. Your journey begins.</p>
 </section>
 
+<!-- ======================
+     CORE SCRIPT
+====================== -->
+<script>
+  const landing = document.getElementById("landing");
+  const startBtn = document.getElementById("startBtn");
+  const modal = document.getElementById("setupModal");
+  const statSetup = document.getElementById("statSetup");
+  const home = document.getElementById("home");
+  const nextBtn = document.getElementById("nextToStats");
+  const finishBtn = document.getElementById("finishSetup");
+
+  // Initial state
+  statSetup.style.display = "none";
+  home.style.display = "none";
+
+  // Get Started → Registration
+  startBtn.addEventListener("click", () => {
+    modal.classList.remove("hidden");
+  });
+
+  // Registration → Stat Setup
+  nextBtn.addEventListener("click", () => {
+    modal.classList.add("hidden");
+    landing.classList.remove("active");
+    landing.style.display = "none";
+
+    statSetup.style.display = "block";
+    statSetup.classList.add("active");
+  });
+
+  // Finish Setup → Home
+  finishBtn.addEventListener("click", () => {
+    statSetup.classList.remove("active");
+    statSetup.style.display = "none";
+
+    home.style.display = "block";
+    home.classList.add("active");
+  });
+</script>
 
 </body>
 </html>
