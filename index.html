@@ -45,20 +45,31 @@
 <!-- ======================
      STAT SETUP SCREEN
 ====================== -->
-<section id="statSetup" class="screen">
-  <h2>Configure Your Stats</h2>
-  <p>Mandatory stats are already added. You may add more.</p>
+<section id="home" class="screen">
+  <h2>Hunter Profile</h2>
 
-  <div id="statsList">
-    <p>Strength</p>
-    <p>Vitality</p>
-    <p>Discipline</p>
+  <!-- Rank + Level -->
+  <div class="profile-card">
+    <div class="rank-badge">E-RANK</div>
+    <h3 id="hunterName">Hunter</h3>
+
+    <div class="level-box">
+      <span>Lv. <b id="level">1</b></span>
+      <div class="xp-bar">
+        <div class="xp-fill" id="xpFill"></div>
+      </div>
+      <small><span id="xp">0</span> / <span id="xpMax">100</span> XP</small>
+    </div>
   </div>
 
-  <input id="customStatInput" placeholder="Add custom stat (optional)">
-  <button id="addStatBtn">Add Stat</button>
+  <!-- Stats -->
+  <div class="stats-grid">
+    <div class="stat-card">💪 Strength <span>1</span></div>
+    <div class="stat-card">❤️ Vitality <span>1</span></div>
+    <div class="stat-card">🧠 Discipline <span>1</span></div>
+  </div>
 
-  <button id="finishSetup">Continue</button>
+  <button class="glow-btn" onclick="gainXP()">Train (+25 XP)</button>
 </section>
 
 <!-- ======================
