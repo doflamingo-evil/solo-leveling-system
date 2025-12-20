@@ -224,3 +224,16 @@ input {
   font-size: 20px;
   margin-top: 6px;
 }
+/* ======================
+   RANK COLORS
+====================== */
+
+.rank-E { background: linear-gradient(90deg, #555, #777); }
+.rank-D { background: linear-gradient(90deg, #4b5563, #9ca3af); }
+.rank-C { background: linear-gradient(90deg, #16a34a, #4ade80); }
+.rank-B { background: linear-gradient(90deg, #2563eb, #60a5fa); }
+.rank-A { background: linear-gradient(90deg, #7c3aed, #a78bfa); }
+.rank-S { background: linear-gradient(90deg, #f59e0b, #fde047); }
+.rank-SN { background: linear-gradient(90deg, #ef4444, #f87171); }
+.rank-SI { background: linear-gradient(90deg, #dc2626, #fb7185); }
+.rank-M { background: linear-gradient(90deg, #000, #7f1d1d); }
