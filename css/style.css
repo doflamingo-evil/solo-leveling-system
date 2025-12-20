@@ -69,3 +69,95 @@ input {
 .hidden {
   display: none;
 }
+/* ===========================
+   SOLO LEVELING LANDING FX
+   =========================== */
+
+.landing-screen {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(circle at center, #0a1020, #000);
+}
+
+/* Moving mana wave */
+.mana-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(120,160,255,0.15),
+    transparent
+  );
+  animation: manaMove 18s linear infinite;
+}
+
+@keyframes manaMove {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100%); }
+}
+
+/* Floating particles */
+.particles::before,
+.particles::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(120,160,255,.4) 2px, transparent 3px),
+    radial-gradient(circle, rgba(180,120,255,.3) 2px, transparent 3px);
+  background-size: 140px 140px;
+  animation: floatParticles 30s linear infinite;
+}
+
+@keyframes floatParticles {
+  from { transform: translateY(0); }
+  to { transform: translateY(-300px); }
+}
+
+/* Hero content */
+.hero {
+  position: relative;
+  text-align: center;
+  z-index: 2;
+}
+
+.hero h1 {
+  font-size: 2.4rem;
+  letter-spacing: 2px;
+  animation: fadeInUp 2s ease forwards;
+}
+
+.hero h1 span {
+  color: #7aa2ff;
+}
+
+.hero p {
+  margin-top: 10px;
+  opacity: 0.75;
+  animation: fadeInUp 3s ease forwards;
+}
+
+/* Glow button override */
+.glow-btn {
+  margin-top: 30px;
+  padding: 16px;
+  border-radius: 30px;
+  background: linear-gradient(90deg, #6a5cff, #4facfe);
+  box-shadow: 0 0 22px rgba(120,150,255,.6);
+  animation: pulseGlow 3s infinite;
+}
+
+@keyframes pulseGlow {
+  0%,100% { box-shadow: 0 0 18px rgba(120,150,255,.6); }
+  50% { box-shadow: 0 0 32px rgba(120,150,255,1); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
