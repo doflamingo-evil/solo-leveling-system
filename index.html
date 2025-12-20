@@ -47,5 +47,13 @@
 
 <script src="js/storage.js"></script>
 <script src="js/app.js"></script>
+<script>
+  const startBtn = document.getElementById("startBtn");
+  const modal = document.getElementById("registerModal");
+
+  startBtn.addEventListener("click", () => {
+    modal.classList.remove("hidden");
+  });
+</script>
 </body>
 </html>
