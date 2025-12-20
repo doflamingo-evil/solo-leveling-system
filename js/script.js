@@ -52,3 +52,29 @@ window.resetSystem = () => {
   localStorage.clear();
   location.reload();
 };
+let level = 1;
+let xp = 0;
+let xpMax = 100;
+
+function updateXP() {
+  document.getElementById("level").textContent = level;
+  document.getElementById("xp").textContent = xp;
+  document.getElementById("xpMax").textContent = xpMax;
+
+  const percent = (xp / xpMax) * 100;
+  document.getElementById("xpFill").style.width = percent + "%";
+}
+
+function gainXP() {
+  xp += 25;
+
+  if (xp >= xpMax) {
+    xp -= xpMax;
+    level++;
+    xpMax = Math.floor(xpMax * 1.25);
+  }
+
+  updateXP();
+}
+
+updateXP();
