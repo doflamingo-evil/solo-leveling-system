@@ -57,6 +57,8 @@ window.addEventListener("load", () => {
 
 /* ---------- LANDING → AUTH ---------- */
 startBtn.addEventListener("click", () => {
+  authModal.classList.add("hidden");
+  void authModal.offsetWidth; // reset animation
   authModal.classList.remove("hidden");
 });
 
