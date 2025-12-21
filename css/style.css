@@ -277,7 +277,7 @@ input {
     rgba(120,150,255,0.8),
     transparent
   );
-  animation: spinAura 2.5s linear infinite;
+  animation: spinAura 1s linear infinite;
   z-index: 0;
 }
 
