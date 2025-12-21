@@ -1,144 +1,220 @@
 /* ===============================
-   SOLO LEVELING SYSTEM — CORE
+   ARCANE ASCENT — CORE SYSTEM
    =============================== */
 
-/* ---------- SCREEN CONTROL ---------- */
+/* ---------- UTIL ---------- */
+const $ = (id) => document.getElementById(id);
+
+/* ---------- SCREENS ---------- */
 const screens = document.querySelectorAll(".screen");
 
 function showScreen(id) {
-  screens.forEach(screen => screen.classList.remove("active"));
-  const target = document.getElementById(id);
-  if (target) target.classList.add("active");
+  screens.forEach(s => {
+    s.classList.remove("active");
+    s.classList.add("hidden");
+  });
+
+  const target = $(id);
+  if (target) {
+    target.classList.remove("hidden");
+    target.classList.add("active");
+  }
 }
 
-/* ---------- MODAL ---------- */
-const setupModal = document.getElementById("setupModal");
+/* ---------- ELEMENTS ---------- */
+const landing = $("landing");
+const startBtn = $("startBtn");
 
-/* ---------- BUTTONS ---------- */
-const startBtn = document.getElementById("startBtn");
-const nextToStatsBtn = document.getElementById("nextToStats");
+const authModal = $("authModal");
+const authTitle = $("authTitle");
+const authActionBtn = $("authActionBtn");
+const toggleAuth = $("toggleAuth");
 
-/* ---------- INPUTS ---------- */
-const nameInput = document.getElementById("nameInput");
-const ageInput = document.getElementById("ageInput");
-const weightInput = document.getElementById("weightInput");
+const emailInput = $("emailInput");
+const passwordInput = $("passwordInput");
 
-/* ---------- GLOBAL DATA ---------- */
-let hunter = null;
+const basicInfo = $("basicInfo");
+const statSetup = $("statSetup");
+const home = $("home");
+
+const nameInput = $("nameInput");
+const ageInput = $("ageInput");
+const weightInput = $("weightInput");
+
+/* ---------- STATE ---------- */
+let isLoginMode = true;
+let hunter = JSON.parse(localStorage.getItem("hunter")) || null;
 
 /* ---------- INITIAL LOAD ---------- */
-document.addEventListener("DOMContentLoaded", () => {
-  const savedHunter = localStorage.getItem("hunter");
-
-  if (savedHunter) {
-    hunter = JSON.parse(savedHunter);
-    loadHome();
+window.addEventListener("load", () => {
+  if (hunter) {
+    loadProfile();
     showScreen("home");
   } else {
     showScreen("landing");
   }
 });
 
-/* ---------- LANDING → MODAL ---------- */
-if (startBtn) {
-  startBtn.addEventListener("click", () => {
-    setupModal.classList.add("show"); // animation
-  });
-}
+/* ---------- LANDING → AUTH ---------- */
+startBtn.addEventListener("click", () => {
+  authModal.classList.remove("hidden");
+});
+
+/* ---------- LOGIN / CREATE TOGGLE ---------- */
+toggleAuth.addEventListener("click", () => {
+  isLoginMode = !isLoginMode;
+
+  authTitle.textContent = isLoginMode ? "Login" : "Create Account";
+  authActionBtn.textContent = isLoginMode ? "Login" : "Create Account";
+  toggleAuth.textContent = isLoginMode ? "Create account" : "Back to login";
+});
+
+/* ---------- AUTH ACTION ---------- */
+authActionBtn.addEventListener("click", () => {
+  const email = emailInput.value.trim();
+  const password = passwordInput.value.trim();
+
+  if (!email || !password) {
+    alert("Email and password are required");
+    return;
+  }
+
+  if (!isLoginMode) {
+    // CREATE ACCOUNT
+    localStorage.setItem("auth", JSON.stringify({ email, password }));
+  } else {
+    // LOGIN
+    const saved = JSON.parse(localStorage.getItem("auth"));
+    if (!saved || saved.email !== email || saved.password !== password) {
+      alert("Invalid login credentials");
+      return;
+    }
+  }
+
+  authModal.classList.add("hidden");
+  showScreen("basicInfo");
+});
 
 /* ---------- BASIC INFO → STATS ---------- */
-if (nextToStatsBtn) {
-  nextToStatsBtn.addEventListener("click", () => {
-    const name = nameInput.value.trim();
-    const age = ageInput.value.trim();
-    const weight = weightInput.value.trim();
+$("continueToStats").addEventListener("click", () => {
+  const name = nameInput.value.trim();
+  const age = ageInput.value;
+  const weight = weightInput.value;
 
-    // 🔴 VALIDATION (CRITICAL)
-    if (!name || !age) {
-      alert("Hunter name and age are required");
-      return; // ⛔ STOP FLOW
+  if (!name || !age) {
+    alert("Name and age are required");
+    return;
+  }
+
+  hunter = {
+    name,
+    age,
+    weight,
+    level: 1,
+    xp: 0,
+    xpMax: 100,
+    rank: "E",
+    stats: {
+      strength: { level: 1, xp: 0 },
+      vitality: { level: 1, xp: 0 },
+      discipline: { level: 1, xp: 0 }
     }
+  };
 
-    hunter = {
-      name,
-      age,
-      weight,
-      level: 1,
-      xp: 0,
-      xpMax: 100,
-      stats: {
-        strength: { level: 1, xp: 0 },
-        vitality: { level: 1, xp: 0 },
-        discipline: { level: 1, xp: 0 }
-      }
-    };
+  localStorage.setItem("hunter", JSON.stringify(hunter));
+  showScreen("statSetup");
+});
 
-    localStorage.setItem("hunter", JSON.stringify(hunter));
+/* ---------- STATS SETUP ---------- */
+$("addStatBtn").addEventListener("click", () => {
+  const input = $("customStatInput");
+  const statName = input.value.trim().toLowerCase();
 
-    setupModal.classList.remove("show");
-    showScreen("home");
-    loadHome();
-  });
-}
-
-/* ---------- LOAD HOME ---------- */
-function loadHome() {
-  if (!hunter) return;
-
-  const nameEl = document.getElementById("hunterName");
-  const levelEl = document.getElementById("level");
-  const xpEl = document.getElementById("xp");
-  const xpMaxEl = document.getElementById("xpMax");
-  const xpFill = document.getElementById("xpFill");
-  const rankBadge = document.getElementById("rankBadge");
-
-  if (nameEl) nameEl.textContent = hunter.name;
-  if (levelEl) levelEl.textContent = hunter.level;
-  if (xpEl) xpEl.textContent = hunter.xp;
-  if (xpMaxEl) xpMaxEl.textContent = hunter.xpMax;
-
-  if (xpFill) {
-    const percent = (hunter.xp / hunter.xpMax) * 100;
-    xpFill.style.width = percent + "%";
+  if (!statName) return;
+  if (hunter.stats[statName]) {
+    alert("Stat already exists");
+    return;
   }
 
-  if (rankBadge) {
-    rankBadge.textContent = getRank(hunter.level);
-  }
+  hunter.stats[statName] = { level: 1, xp: 0 };
+  input.value = "";
+  renderStats();
+  saveHunter();
+});
+
+$("finishSetup").addEventListener("click", () => {
+  showScreen("home");
+  loadProfile();
+});
+
+/* ---------- PROFILE ---------- */
+function loadProfile() {
+  $("profileName").textContent = hunter.name;
+  $("level").textContent = hunter.level;
+  $("xp").textContent = hunter.xp;
+  $("xpMax").textContent = hunter.xpMax;
+  $("rankBadge").textContent = hunter.rank + "-RANK";
+  updateXPBar();
 }
 
 /* ---------- XP SYSTEM ---------- */
-window.gainXP = function (amount = 25) {
-  if (!hunter) return;
+$("testXP").addEventListener("click", () => {
+  gainXP(25);
+});
 
+function gainXP(amount) {
   hunter.xp += amount;
 
   if (hunter.xp >= hunter.xpMax) {
     hunter.xp -= hunter.xpMax;
     hunter.level++;
-    hunter.xpMax += 50;
+    hunter.xpMax += 25;
+    updateRank();
   }
 
-  localStorage.setItem("hunter", JSON.stringify(hunter));
-  loadHome();
-};
-
-/* ---------- RANK SYSTEM ---------- */
-function getRank(level) {
-  if (level >= 110) return "MONARCH";
-  if (level >= 90) return "EMPEROR";
-  if (level >= 70) return "S-INTERNATIONAL";
-  if (level >= 60) return "S-NATIONAL";
-  if (level >= 50) return "S-RANK";
-  if (level >= 40) return "A-RANK";
-  if (level >= 30) return "B-RANK";
-  if (level >= 20) return "C-RANK";
-  if (level >= 10) return "D-RANK";
-  return "E-RANK";
+  saveHunter();
+  loadProfile();
 }
 
-/* ---------- DEV RESET (OPTIONAL) ---------- */
-window.resetSystem = function () {
+function updateXPBar() {
+  const percent = (hunter.xp / hunter.xpMax) * 100;
+  $("xpFill").style.width = percent + "%";
+}
+
+/* ---------- RANK SYSTEM ---------- */
+function updateRank() {
+  const lvl = hunter.level;
+
+  if (lvl >= 110) hunter.rank = "MONARCH";
+  else if (lvl >= 90) hunter.rank = "EMPEROR";
+  else if (lvl >= 70) hunter.rank = "INTERNATIONAL";
+  else if (lvl >= 60) hunter.rank = "NATIONAL";
+  else if (lvl >= 50) hunter.rank = "S";
+  else if (lvl >= 40) hunter.rank = "A";
+  else if (lvl >= 30) hunter.rank = "B";
+  else if (lvl >= 20) hunter.rank = "C";
+  else if (lvl >= 10) hunter.rank = "D";
+  else hunter.rank = "E";
+}
+
+/* ---------- HELPERS ---------- */
+function renderStats() {
+  const container = $("statsList");
+  container.innerHTML = "";
+
+  Object.keys(hunter.stats).forEach(stat => {
+    const div = document.createElement("div");
+    div.textContent = `${stat.toUpperCase()} — Lv ${hunter.stats[stat].level}`;
+    container.appendChild(div);
+  });
+}
+
+function saveHunter() {
+  localStorage.setItem("hunter", JSON.stringify(hunter));
+}
+
+/* ---------- DEV RESET ---------- */
+window.resetSystem = () => {
   localStorage.clear();
   location.reload();
 };
