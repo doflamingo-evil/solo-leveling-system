@@ -2,6 +2,8 @@ console.log("app.js loaded");
 window.onerror = function (msg, url, line) {
   alert("ERROR: " + msg + " (line " + line + ")");
 };
+console.log("app.js loaded");
+alert("app.js loaded");
 /* ================================
    SOLO LEVELING SYSTEM — app.js
    ================================ */
