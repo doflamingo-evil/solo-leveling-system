@@ -260,7 +260,7 @@ input {
     0 0 20px rgba(120,150,255,0.4),
     0 0 60px rgba(120,150,255,0.15);
   overflow: hidden;
-  animation: boxPulse 3s infinite;
+  animation: boxPulse 2s infinite;
 }
 
 /* Rotating mana/fire ring */
@@ -277,7 +277,7 @@ input {
     rgba(120,150,255,0.8),
     transparent
   );
-  animation: spinAura 4s linear infinite;
+  animation: spinAura 2.5s linear infinite;
   z-index: 0;
 }
 
