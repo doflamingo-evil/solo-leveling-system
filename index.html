@@ -1,70 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AURION — Level Your Life</title>
-<link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Arcane Ascent</title>
+
+  <!-- MAIN CSS -->
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<!-- AURORA BACKGROUND -->
-<div class="aurora"></div>
-<div class="glass-light"></div>
+<!-- ======================
+     LANDING / MOTIVATION
+====================== -->
+<div id="landing" class="screen landing-screen active">
 
-<!-- LANDING -->
-<section id="landing" class="screen active">
-  <h1 class="title">AURION</h1>
-  <p class="subtitle">You were never weak. You were unawakened.</p>
+  <!-- Animated background -->
+  <div class="aurora"></div>
+  <div class="light-core"></div>
 
-  <div class="cta">
-    <button id="loginBtn">LOGIN</button>
-    <button id="registerBtn" class="outline">CREATE ACCOUNT</button>
-  </div>
-</section>
+  <!-- Glass hero card -->
+  <div class="hero glass">
+    <h1>ARCANE ASCENT</h1>
+    <p>Awaken. Train. Rise beyond human limits.</p>
 
-<!-- AUTH MODAL -->
-<div id="authModal" class="modal hidden">
-  <div class="auth-card pop">
-    <h2 id="authTitle">Login</h2>
-
-    <input id="emailInput" placeholder="Email">
-    <input id="passwordInput" type="password" placeholder="Password">
-
-    <button id="authNext">Continue</button>
-    <p id="switchAuth">Create account instead</p>
+    <button id="startBtn" class="glow-btn">
+      GET STARTED
+    </button>
   </div>
 </div>
 
-<!-- BASIC INFO -->
+<!-- ======================
+     LOGIN / CREATE MODAL
+====================== -->
+<div id="authModal" class="modal hidden">
+  <div class="modal-box glass">
+
+    <h2 id="authTitle">Login</h2>
+
+    <input id="emailInput" type="email" placeholder="Email">
+    <input id="passwordInput" type="password" placeholder="Password">
+
+    <button id="authActionBtn">Login</button>
+
+    <p style="text-align:center; margin-top:10px; opacity:.7;">
+      <span id="toggleAuth" style="color:#7aa2ff; cursor:pointer;">
+        Create account
+      </span>
+    </p>
+
+  </div>
+</div>
+
+<!-- ======================
+     BASIC INFO (STEP 2)
+====================== -->
 <section id="basicInfo" class="screen hidden">
   <h2>Hunter Registration</h2>
-  <input id="nameInput" placeholder="Name">
+
+  <input id="nameInput" placeholder="Hunter Name">
   <input id="ageInput" type="number" placeholder="Age">
-  <input id="weightInput" type="number" placeholder="Weight">
-  <button id="toStats">Next</button>
+  <input id="weightInput" type="number" placeholder="Weight (kg)">
+
+  <button id="continueToStats">Continue</button>
 </section>
 
-<!-- STATS -->
-<section id="statsSetup" class="screen hidden">
-  <h2>Configure Stats</h2>
-  <div class="stat locked">Strength</div>
-  <div class="stat locked">Vitality</div>
-  <div class="stat locked">Discipline</div>
+<!-- ======================
+     STAT SETUP (STEP 3)
+====================== -->
+<section id="statSetup" class="screen hidden">
+  <h2>Configure Your Stats</h2>
 
-  <input id="customStat" placeholder="Add custom stat (optional)">
-  <button id="addStat">Add</button>
+  <div id="statsList"></div>
 
-  <button id="finishSetup">Continue</button>
+  <input id="customStatInput" placeholder="Add custom stat (optional)">
+  <button id="addStatBtn">Add Stat</button>
+
+  <button id="finishSetup">Finish</button>
 </section>
 
-<!-- PROFILE -->
-<section id="profile" class="screen hidden">
-  <h2 id="hunterName">Hunter</h2>
-  <p>Rank: E</p>
-  <div class="xp-bar"><div class="xp-fill"></div></div>
+<!-- ======================
+     HOME / PROFILE
+====================== -->
+<section id="home" class="screen hidden">
+  <h2>Hunter Profile</h2>
+
+  <div class="profile-card glass">
+    <div id="rankBadge">E-RANK</div>
+    <h3 id="profileName">Hunter</h3>
+
+    <div class="level-box">
+      <span>Lv. <b id="level">1</b></span>
+      <div class="xp-bar">
+        <div class="xp-fill" id="xpFill"></div>
+      </div>
+      <small><span id="xp">0</span> / <span id="xpMax">100</span> XP</small>
+    </div>
+  </div>
+
+  <button class="glow-btn" id="testXP">Gain XP</button>
 </section>
 
+<!-- ======================
+     MAIN JS (VERY IMPORTANT)
+====================== -->
 <script src="js/app.js"></script>
+
 </body>
 </html>
