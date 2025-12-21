@@ -76,11 +76,13 @@ body {
 .modal {
   position: fixed;
   inset: 0;
+  background: rgba(5, 10, 20, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0,0,0,.5);
-  z-index: 10;
+  z-index: 100;
 }
 
 .hidden { display: none; }
