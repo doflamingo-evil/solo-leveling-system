@@ -3,46 +3,65 @@
    ================================ */
 
 /* ---------- SCREEN CONTROL ---------- */
-const screens = document.querySelectorAll(".screen");
-
-function showScreen(id) {
-  screens.forEach(s => s.classList.remove("active"));
-  const target = document.getElementById(id);
-  if (target) target.classList.add("active");
-}
 
 /* ---------- LOAD HUNTER ---------- */
-let hunter = JSON.parse(localStorage.getItem("hunter"));
-
-document.addEventListener("DOMContentLoaded", () => {
-  if (!hunter) {
-    showScreen("landing");
-  } else {
-    loadHome();
-    showScreen("home");
-  }
-});
 
 /* ---------- LANDING → MODAL ---------- */
-const startBtn = document.getElementById("startBtn");
-const setupModal = document.getElementById("setupModal");
-const nextBtn = document.getElementById("nextTostats");
-startBtn.addEventListener("click", () => {
-  // show modal
-  setupModal.classList.remove("hidden");
+document.addEventListener("DOMContentLoaded", () => {
 
-  // hide Get Started button
-  startBtn.style.opacity = "0";
-  startBtn.style.pointerEvents = "none";
-});
-nextBtn.addEventListener("click", () => {
-  // hide modal
-  setupModal.classList.add("hidden");
+  const startBtn = document.getElementById("startBtn");
+  const setupModal = document.getElementById("setupModal");
+  const nextBtn = document.getElementById("nextToStats");
+  const landing = document.getElementById("landing");
+  const home = document.getElementById("home");
 
-  // OPTIONAL: if you ever want to show button again
-  // (for back navigation later)
-  startBtn.style.opacity = "1";
-  startBtn.style.pointerEvents = "auto";
+  // GET STARTED → OPEN MODAL
+  startBtn.addEventListener("click", () => {
+    setupModal.classList.remove("hidden");
+    startBtn.style.opacity = "0";
+    startBtn.style.pointerEvents = "none";
+  });
+
+  // SAVE BASIC INFO
+  nextBtn.addEventListener("click", () => {
+
+    const name = document.getElementById("nameInput").value.trim();
+    const age = document.getElementById("ageInput").value;
+    const weight = document.getElementById("weightInput").value;
+
+    if (!name || !age) {
+      alert("Hunter name and age are required");
+      return;
+    }
+
+    const hunter = {
+      name,
+      age,
+      weight,
+      level: 1,
+      xp: 0,
+      xpMax: 100,
+      stats: {
+        strength: { level: 1, xp: 0 },
+        vitality: { level: 1, xp: 0 },
+        discipline: { level: 1, xp: 0 }
+      }
+    };
+
+    localStorage.setItem("hunter", JSON.stringify(hunter));
+
+    // CLOSE MODAL + MOVE TO HOME
+    setupModal.classList.add("hidden");
+    landing.classList.remove("active");
+    landing.style.display = "none";
+
+    home.classList.add("active");
+    home.style.display = "block";
+
+    // UPDATE PROFILE UI
+    document.getElementById("hunterName").textContent = hunter.name;
+  });
+
 });
 
 /* ---------- BASIC INFO → STATS ---------- */
