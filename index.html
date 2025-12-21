@@ -1,1 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solo Leveling System</title>
 
+<style>
+/* ================= BASIC ================= */
+* {
+  box-sizing: border-box;
+  font-family: system-ui, sans-serif;
+}
+body {
+  margin: 0;
+  background: #050b14;
+  color: #e6f0ff;
+}
+.hidden { display: none; }
+
+/* ================= LANDING ================= */
+.screen {
+  min-height: 100vh;
+  display: none;
+}
+.screen.active {
+  display: flex;
+}
+
+.landing-screen {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.mana-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent, rgba(120,160,255,.2), transparent);
+  animation: manaMove 12s linear infinite;
+}
+@keyframes manaMove {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100%); }
+}
+
+.hero {
+  position: relative;
+  z-index: 2;
+}
+.hero h1 {
+  font-size: 2.4rem;
+}
+.hero span {
+  color: #7aa2ff;
+}
+
+.glow-btn {
+  margin-top: 25px;
+  padding: 16px 28px;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  background: linear-gradient(90deg, #6a5cff, #4facfe);
+  color: white;
+  box-shadow: 0 0 25px rgba(120,150,255,.8);
+}
+
+/* ================= MODAL ================= */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+.modal-box {
+  background: #0c1626;
+  padding: 20px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 360px;
+  box-shadow: 0 0 30px rgba(120,150,255,.6);
+}
+.modal-box input {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: #02060d;
+  color: white;
+}
+
+/* ================= HOME ================= */
+#home {
+  padding: 24px;
+  flex-direction: column;
+}
+.profile-card {
+  background: #0c1626;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(120,150,255,.3);
+}
+.rank {
+  color: #7aa2ff;
+  font-weight: bold;
+}
+.xp-bar {
+  height: 10px;
+  background: #02060d;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+.xp-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg,#7c3aed,#3b82f6);
+}
+</style>
+</head>
+
+<body>
+
+<!-- LANDING -->
+<div id="landing" class="screen landing-screen active">
+  <div class="mana-bg"></div>
+  <div class="hero">
+    <h1>LEVEL UP YOUR<br><span>REAL LIFE</span></h1>
+    <p>You are not weak. You are just unawakened.</p>
+    <button id="startBtn" class="glow-btn">GET STARTED</button>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div id="setupModal" class="modal hidden">
+  <div class="modal-box">
+    <h2>Hunter Registration</h2>
+    <input id="nameInput" placeholder="Hunter Name">
+    <input id="ageInput" type="number" placeholder="Age">
+    <input id="weightInput" type="number" placeholder="Weight (kg)">
+    <button id="saveHunter" class="glow-btn">Confirm</button>
+  </div>
+</div>
+
+<!-- HOME -->
+<div id="home" class="screen">
+  <div class="profile-card">
+    <div class="rank">E-RANK HUNTER</div>
+    <h2 id="hunterName">Hunter</h2>
+    <p>Level <span id="level">1</span></p>
+
+    <div class="xp-bar">
+      <div class="xp-fill" id="xpFill"></div>
+    </div>
+    <small><span id="xp">0</span>/100 XP</small>
+
+    <br><br>
+    <button class="glow-btn" onclick="gainXP()">Train (+25 XP)</button>
+  </div>
+</div>
+
+<script>
+console.log("JS LOADED");
+
+/* ELEMENTS */
+const landing = document.getElementById("landing");
+const startBtn = document.getElementById("startBtn");
+const modal = document.getElementById("setupModal");
+const saveBtn = document.getElementById("saveHunter");
+const home = document.getElementById("home");
+
+/* XP SYSTEM */
+let hunter = JSON.parse(localStorage.getItem("hunter"));
+let xp = hunter?.xp || 0;
+let level = hunter?.level || 1;
+
+/* INIT */
+if (hunter) {
+  showHome();
+}
+
+/* BUTTONS */
+startBtn.addEventListener("click", () => {
+  modal.classList.remove("hidden");
+});
+
+saveBtn.addEventListener("click", () => {
+  const name = nameInput.value.trim();
+  const age = ageInput.value;
+
+  if (!name || !age) {
+    alert("Name and age required");
+    return;
+  }
+
+  hunter = {
+    name,
+    age,
+    xp: 0,
+    level: 1
+  };
+
+  localStorage.setItem("hunter", JSON.stringify(hunter));
+  showHome();
+});
+
+/* FUNCTIONS */
+function showHome() {
+  landing.style.display = "none";
+  modal.classList.add("hidden");
+  home.classList.add("active");
+
+  document.getElementById("hunterName").textContent = hunter.name;
+  updateXP();
+}
+
+function gainXP() {
+  xp += 25;
+  if (xp >= 100) {
+    xp = 0;
+    level++;
+  }
+  hunter.xp = xp;
+  hunter.level = level;
+  localStorage.setItem("hunter", JSON.stringify(hunter));
+  updateXP();
+}
+
+function updateXP() {
+  document.getElementById("xp").textContent = xp;
+  document.getElementById("level").textContent = level;
+  document.getElementById("xpFill").style.width = xp + "%";
+}
+</script>
+
+</body>
+</html>
