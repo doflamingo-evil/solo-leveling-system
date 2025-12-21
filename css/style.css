@@ -79,6 +79,7 @@ input {
   align-items: center;
   justify-content: center;
   position: relative;
+  z-index:1;
   overflow: hidden;
   background: radial-gradient(circle at center, #0a1020, #000);
 }
