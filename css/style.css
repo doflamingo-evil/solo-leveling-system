@@ -361,13 +361,15 @@ body {
    ========================= */
 
 .modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 10, 20, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 100;
-  animation: fadeBackdrop .4s ease forwards;
-}
-
-@keyframes fadeBackdrop {
-  from { background: rgba(0,0,0,0); }
-  to { background: rgba(0,0,0,.7); }
 }
 
 /* Login card pop */
