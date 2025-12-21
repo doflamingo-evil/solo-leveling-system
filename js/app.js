@@ -26,9 +26,23 @@ document.addEventListener("DOMContentLoaded", () => {
 /* ---------- LANDING → MODAL ---------- */
 const startBtn = document.getElementById("startBtn");
 const setupModal = document.getElementById("setupModal");
-
-startBtn?.addEventListener("click", () => {
+const nextBtn = document.getElementById("nextTostats");
+startBtn.addEventListener("click", () => {
+  // show modal
   setupModal.classList.remove("hidden");
+
+  // hide Get Started button
+  startBtn.style.opacity = "0";
+  startBtn.style.pointerEvents = "none";
+});
+nextBtn.addEventListener("click", () => {
+  // hide modal
+  setupModal.classList.add("hidden");
+
+  // OPTIONAL: if you ever want to show button again
+  // (for back navigation later)
+  startBtn.style.opacity = "1";
+  startBtn.style.pointerEvents = "auto";
 });
 
 /* ---------- BASIC INFO → STATS ---------- */
