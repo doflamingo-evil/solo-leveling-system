@@ -1,81 +1,50 @@
-const motivation = document.getElementById("motivation");
-const setupModal = document.getElementById("setupModal");
-const statSetup = document.getElementById("statSetup");
-const home = document.getElementById("home");
+let level = 1;
+let xp = 0;
+let xpMax = 100;
 
-const startBtn = document.getElementById("startBtn");
-const nextToStats = document.getElementById("nextToStats");
-const finishSetup = document.getElementById("finishSetup");
-
-const statsList = document.getElementById("statsList");
-const addStatBtn = document.getElementById("addStatBtn");
-const customStatInput = document.getElementById("customStatInput");
-
-// INITIAL DATA
-let data = {
-  hunter: {},
-  stats: {}
-};
-
-// MANDATORY STATS
-const mandatoryStats = ["Strength", "Vitality", "Discipline"];
-
-// CHECK IF ALREADY SETUP
-const saved = loadData();
-if (saved) {
-  showHome();
+function getRank(lv) {
+  if (lv >= 110) return ["MONARCH", "rank-M"];
+  if (lv >= 90) return ["S-INTERNATIONAL", "rank-SI"];
+  if (lv >= 70) return ["S-NATIONAL", "rank-SN"];
+  if (lv >= 50) return ["S-RANK", "rank-S"];
+  if (lv >= 40) return ["A-RANK", "rank-A"];
+  if (lv >= 30) return ["B-RANK", "rank-B"];
+  if (lv >= 20) return ["C-RANK", "rank-C"];
+  if (lv >= 10) return ["D-RANK", "rank-D"];
+  return ["E-RANK", "rank-E"];
 }
 
-// EVENTS
-startBtn.onclick = () => {
-  setupModal.classList.remove("hidden");
-};
+function updateXP() {
+  document.getElementById("level").textContent = level;
+  document.getElementById("xp").textContent = xp;
+  document.getElementById("xpMax").textContent = xpMax;
 
-nextToStats.onclick = () => {
-  data.hunter.name = nameInput.value;
-  data.hunter.age = ageInput.value;
-  data.hunter.weight = weightInput.value;
+  document.getElementById("xpFill").style.width =
+    Math.min((xp / xpMax) * 100, 100) + "%";
 
-  setupModal.classList.add("hidden");
-  motivation.classList.remove("active");
-  statSetup.classList.add("active");
+  const [rankText, rankClass] = getRank(level);
+  const badge = document.getElementById("rankBadge");
 
-  renderStats();
-};
-
-addStatBtn.onclick = () => {
-  const stat = customStatInput.value.trim();
-  if (!stat || data.stats[stat]) return;
-
-  data.stats[stat] = { xp: 0 };
-  customStatInput.value = "";
-  renderStats();
-};
-
-finishSetup.onclick = () => {
-  saveData(data);
-  showHome();
-};
-
-// FUNCTIONS
-function renderStats() {
-  statsList.innerHTML = "";
-
-  mandatoryStats.forEach(stat => {
-    if (!data.stats[stat]) {
-      data.stats[stat] = { xp: 0 };
-    }
-  });
-
-  Object.keys(data.stats).forEach(stat => {
-    const div = document.createElement("div");
-    div.textContent = stat;
-    statsList.appendChild(div);
-  });
+  badge.textContent = rankText;
+  badge.className = "rank-badge " + rankClass;
 }
 
-function showHome() {
-  motivation.classList.remove("active");
-  statSetup.classList.remove("active");
-  home.classList.add("active");
+function gainXP(amount = 25) {
+  xp += amount;
+
+  while (xp >= xpMax) {
+    xp -= xpMax;
+    level++;
+    xpMax = Math.floor(xpMax * 1.25);
+  }
+
+  updateXP();
 }
+
+// TEST BUTTON (temporary)
+document.addEventListener("DOMContentLoaded", () => {
+  updateXP();
+
+  // auto test every 3 sec
+  setInterval(() => gainXP(20), 3000);
+});
