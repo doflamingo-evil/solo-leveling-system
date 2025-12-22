@@ -1,211 +1,125 @@
-/* =====================
-   RESET
-===================== */
+/* RESET */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-html, body {
-  height: 100%;
-  font-family: 'Segoe UI', system-ui, sans-serif;
-  background: #050814;
-  color: #eaf0ff;
-  overflow-x: hidden;
-}
-
-/* =====================
-   SCREENS
-===================== */
-.screen {
-  min-height: 100vh;
-  display: none;
-}
-
-.screen.active {
-  display: flex;
-}
-
-/* =====================
-   LANDING BACKGROUND
-===================== */
-.landing-screen {
-  position: relative;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  background:
-    radial-gradient(circle at 30% 20%, rgba(120,140,255,0.35), transparent 50%),
-    radial-gradient(circle at 70% 80%, rgba(160,120,255,0.35), transparent 50%),
-    linear-gradient(135deg, #050814, #0b1024);
+body {
+  height: 100vh;
+  background: #05070f;
   overflow: hidden;
 }
 
-/* subtle aurora animation */
-.landing-screen::before {
-  content: "";
+/* =====================
+   LANDING BASE
+===================== */
+.landing {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =====================
+   AURORA LIGHT
+===================== */
+.aurora {
   position: absolute;
-  inset: -40%;
-  background: linear-gradient(
-    120deg,
-    rgba(90,120,255,0.25),
-    rgba(180,120,255,0.25),
-    rgba(90,120,255,0.25)
-  );
-  animation: auroraMove 12s linear infinite;
-  filter: blur(80px);
+  inset: -50%;
+  background:
+    radial-gradient(circle at 30% 40%, rgba(120,90,255,0.35), transparent 40%),
+    radial-gradient(circle at 70% 60%, rgba(60,140,255,0.35), transparent 40%);
+  animation: auroraMove 18s ease-in-out infinite alternate;
 }
 
 @keyframes auroraMove {
-  0% { transform: translateX(-20%) rotate(0deg); }
-  50% { transform: translateX(20%) rotate(180deg); }
-  100% { transform: translateX(-20%) rotate(360deg); }
+  0% {
+    transform: translate(0,0) rotate(0deg);
+  }
+  100% {
+    transform: translate(8%, -6%) rotate(10deg);
+  }
 }
 
 /* =====================
-   HERO CONTENT
+   GLASS PANEL
 ===================== */
-.hero {
+.glass {
   position: relative;
+  width: 85%;
+  max-width: 360px;
+  height: 420px;
+  border-radius: 22px;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.12),
+    rgba(255,255,255,0.04)
+  );
+  border: 1px solid rgba(255,255,255,0.18);
+  box-shadow:
+    0 0 40px rgba(120,120,255,0.35),
+    inset 0 0 30px rgba(255,255,255,0.08);
+  overflow: hidden;
   z-index: 2;
-  max-width: 420px;
-  padding: 20px;
-}
-
-.hero h1 {
-  font-size: 2.4rem;
-  line-height: 1.2;
-  margin-bottom: 12px;
-}
-
-.hero h1 span {
-  color: #7aa2ff;
-}
-
-.hero p {
-  opacity: 0.85;
-  margin-bottom: 22px;
 }
 
 /* =====================
-   BUTTON
+   WATER DROPLETS
 ===================== */
-.glow-btn {
-  padding: 14px 26px;
-  border-radius: 30px;
-  border: none;
-  background: linear-gradient(135deg, #6a8cff, #a97bff);
-  color: #fff;
-  font-size: 1rem;
-  cursor: pointer;
-  box-shadow: 0 0 18px rgba(120,140,255,0.6);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.glow-btn:active {
-  transform: scale(0.96);
-}
-
-/* =====================
-   MODAL OVERLAY
-===================== */
-.modal {
-  position: fixed;
+.droplets {
+  position: absolute;
   inset: 0;
-  background: rgba(5, 10, 20, 0.55);
-
-  /* ONLY background blur */
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.35) 1.2px, transparent 1.5px);
+  background-size: 22px 22px;
+  animation: rainFall 14s linear infinite;
+  opacity: 0.35;
 }
 
-.hidden {
-  display: none;
-}
-
-/* =====================
-   MODAL BOX (NO BLUR!)
-===================== */
-.modal-box {
-  width: 90%;
-  max-width: 380px;
-  padding: 24px;
-  border-radius: 18px;
-
-  background: rgba(20, 30, 55, 0.85);
-  border: 1px solid rgba(255,255,255,0.15);
-
-  /* IMPORTANT: NO BLUR HERE */
-  filter: none;
-  backdrop-filter: none;
-
-  animation: popIn 0.35s ease;
-}
-
-@keyframes popIn {
+@keyframes rainFall {
   from {
-    transform: scale(0.85) translateY(20px);
-    opacity: 0;
+    background-position: 0 0;
   }
   to {
-    transform: scale(1) translateY(0);
-    opacity: 1;
+    background-position: 0 400px;
   }
 }
 
-.modal-box h2 {
-  text-align: center;
-  margin-bottom: 16px;
-}
-
 /* =====================
-   INPUTS
+   CONTENT
 ===================== */
-.modal-box input {
-  width: 100%;
-  padding: 12px 14px;
-  margin-bottom: 14px;
-  border-radius: 10px;
-  border: none;
-  outline: none;
-  background: rgba(255,255,255,0.08);
-  color: #fff;
-  font-size: 0.95rem;
-}
-
-.modal-box input::placeholder {
-  color: rgba(255,255,255,0.6);
-}
-
-/* =====================
-   PROFILE (SAFE)
-===================== */
-.profile-card {
-  margin: 40px auto;
-  max-width: 380px;
-  padding: 20px;
-  border-radius: 16px;
-  background: rgba(20,30,55,0.75);
-  border: 1px solid rgba(255,255,255,0.15);
-}
-
-.xp-bar {
-  width: 100%;
-  height: 8px;
-  background: rgba(255,255,255,0.15);
-  border-radius: 6px;
-  overflow: hidden;
-}
-
-.xp-fill {
+.content {
+  position: relative;
+  z-index: 3;
   height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #6a8cff, #a97bff);
-  transition: width 0.3s ease;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  color: #eaf0ff;
+}
+
+.content h1 {
+  font-size: 2.2rem;
+  letter-spacing: 4px;
+  margin-bottom: 12px;
+  background: linear-gradient(90deg, #9f8cff, #5fa8ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.content p {
+  font-size: 1rem;
+  opacity: 0.85;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  opacity: 0.6;
 }
