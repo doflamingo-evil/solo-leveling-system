@@ -48,6 +48,30 @@
   </div>
 
 </div>
+<!-- SYSTEM LOGIN POPUP -->
+<div id="systemOverlay" class="system-overlay hidden">
+  <div class="system-card" id="systemCard">
 
+    <h1 class="system-title">SYSTEM</h1>
+    <p class="system-sub">Authentication Required</p>
+
+    <!-- LOGIN FORM -->
+    <div class="form active" id="loginForm">
+      <input type="email" id="loginEmail" placeholder="Enter Email">
+      <input type="password" id="loginPassword" placeholder="Enter Password">
+      <button onclick="login()">LOGIN</button>
+      <p class="switch" onclick="showCreate()">Create New Account</p>
+    </div>
+
+    <!-- CREATE FORM -->
+    <div class="form" id="createForm">
+      <input type="email" id="createEmail" placeholder="Enter Email">
+      <input type="password" id="createPassword" placeholder="Create Password">
+      <button onclick="createAccount()">CREATE ACCOUNT</button>
+      <p class="switch" onclick="showLogin()">I already have an account</p>
+    </div>
+
+  </div>
+</div>
 </body>
 </html>
