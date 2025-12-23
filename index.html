@@ -1,25 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ascension</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: system-ui, sans-serif;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: #02030a;
+  color: white;
+  overflow: hidden;
+}
+
+/* ================= TOP BAR ================= */
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: linear-gradient(90deg, #5b2cff, #8a6cff);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+  z-index: 10;
+}
+
+.top-bar h2 {
+  font-size: 16px;
+  letter-spacing: 2px;
+}
+
+.menu {
+  font-size: 22px;
+}
+
+/* ================= BACKGROUND ================= */
+.landing {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, #060b1a, #02030a);
+}
+
+/* POLICE SIREN GLOW */
+.glow {
+  position: absolute;
+  inset: -30%;
+  background:
+    radial-gradient(circle at 30% 50%, rgba(80,120,255,0.6), transparent 45%),
+    radial-gradient(circle at 70% 50%, rgba(160,80,255,0.6), transparent 45%);
+  animation: siren 6s ease-in-out infinite alternate;
+  filter: blur(120px);
+}
+
+@keyframes siren {
+  from { opacity: 0.4; }
+  to { opacity: 0.9; }
+}
+
+/* GLASS */
+.glass {
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* ================= WATER DROPLETS ================= */
+.droplet {
+  position: absolute;
+  top: -20px;
+  width: 6px;
+  height: 6px;
+  background: rgba(255,255,255,0.7);
+  border-radius: 50%;
+  filter: blur(0.5px);
+  animation: drop linear infinite;
+}
+
+@keyframes drop {
+  from {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  10% { opacity: 1; }
+  to {
+    transform: translateY(110vh);
+    opacity: 0;
+  }
+}
+
+/* ================= CONTENT ================= */
+.content {
+  position: relative;
+  z-index: 5;
+  height: 100%;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.title {
+  font-size: 3.2rem;
+  letter-spacing: 6px;
+}
+
+.quote {
+  margin-top: 10px;
+  opacity: 0.75;
+  font-size: 14px;
+}
+
+button {
+  margin-top: 26px;
+  padding: 16px;
+  border-radius: 40px;
+  border: none;
+  font-size: 16px;
+  color: white;
+  background: linear-gradient(90deg, #6a5cff, #4facfe);
+  box-shadow: 0 0 30px rgba(120,150,255,0.7);
+}
+
+.desc {
+  margin-top: 18px;
+  font-size: 13px;
+  opacity: 0.6;
+  max-width: 420px;
+}
+</style>
+</head>
+
 <body>
-<link rel="stylesheet" href="./css/style.css">
+
+<div class="top-bar">
+  <h2>ASCENSION</h2>
+  <div class="menu">☰</div>
+</div>
+
 <div class="landing">
-  <!-- Aurora light -->
-  <div class="aurora"></div>
+  <div class="glow"></div>
+  <div class="glass"></div>
 
-  <!-- Glass layer -->
-  <div class="glass">
-    <!-- Rain layer -->
-    <div class="rain"></div>
+  <!-- WATER DROPLETS -->
+  <div class="droplet" style="left:10%; animation-duration:7s;"></div>
+  <div class="droplet" style="left:25%; animation-duration:9s;"></div>
+  <div class="droplet" style="left:40%; animation-duration:8s;"></div>
+  <div class="droplet" style="left:55%; animation-duration:10s;"></div>
+  <div class="droplet" style="left:70%; animation-duration:7.5s;"></div>
+  <div class="droplet" style="left:85%; animation-duration:9.5s;"></div>
 
-    <!-- Content -->
-    <div class="content">
-      <h1>ASCENSION</h1>
-      <p class="tagline">Awaken. Adapt. Ascend.</p>
-      <p class="desc">
-        You were never weak — the system was dormant.
-      </p>
+  <div class="content">
+    <h1 class="title">ARISE</h1>
+    <p class="quote">You were never weak — the system was dormant.</p>
 
-      <button class="start-btn">GET STARTED</button>
-    </div>
+    <button>GET STARTED</button>
+
+    <p class="desc">
+      Ascension turns your real life into a leveling system — discipline,
+      strength, focus, rewards, ranks, and growth.
+    </p>
   </div>
 </div>
 
 </body>
+</html>
