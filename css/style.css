@@ -2,119 +2,157 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: system-ui, sans-serif;
 }
 
 html, body {
   width: 100%;
   height: 100%;
-  background: #05070d;
-  color: white;
+  background: #02030a;
   overflow: hidden;
+  color: white;
 }
 
-/* ======================
-   LANDING BASE
-====================== */
-.landing {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
+/* TOP BAR */
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: linear-gradient(90deg, #5b2cff, #8a6cff);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+  z-index: 20;
+}
+
+.top-bar h2 {
+  font-size: 14px;
+  letter-spacing: 3px;
+}
+
+.menu {
+  font-size: 22px;
+}
+
+/* SCENE */
+.scene {
+  position: fixed;
+  inset: 0;
   background: radial-gradient(circle at center, #060b1a, #02030a);
 }
 
-/* ======================
-   AURORA GLOW
-====================== */
-.aurora {
+/* ENERGY GLOW */
+.energy {
   position: absolute;
-  inset: -50%;
+  inset: -40%;
   background:
-    radial-gradient(circle at 30% 40%, rgba(120,90,255,0.45), transparent 40%),
-    radial-gradient(circle at 70% 60%, rgba(60,180,255,0.35), transparent 45%);
-  animation: auroraMove 20s linear infinite;
-  filter: blur(120px);
+    radial-gradient(circle at 30% 50%, rgba(70,120,255,0.6), transparent 45%),
+    radial-gradient(circle at 70% 50%, rgba(170,90,255,0.6), transparent 45%);
+  filter: blur(160px);
+  animation: pulse 6s ease-in-out infinite alternate;
 }
 
-@keyframes auroraMove {
-  0% { transform: translate(0,0); }
-  50% { transform: translate(10%, -10%); }
-  100% { transform: translate(0,0); }
+@keyframes pulse {
+  from { opacity: .4; }
+  to   { opacity: .9; }
 }
 
-/* ======================
-   GLASS PANEL
-====================== */
+/* REAL WATER TEXTURE */
+.water-texture {
+  position: absolute;
+  inset: 0;
+  background: url("../assets/water-glass.png") center / cover no-repeat;
+  opacity: 0.35;
+  animation: slowDrift 40s linear infinite;
+}
+
+@keyframes slowDrift {
+  from { transform: translateY(0); }
+  to   { transform: translateY(60px); }
+}
+
+/* GLASS */
 .glass {
   position: absolute;
   inset: 0;
   background: rgba(255,255,255,0.04);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  overflow: hidden;
+  backdrop-filter: blur(10px);
 }
 
-/* ======================
-   REALISTIC RAIN
-====================== */
-.rain {
+/* DARK EDGES */
+.vignette {
   position: absolute;
   inset: 0;
-  background-image:
-    linear-gradient(
-      to bottom,
-      rgba(255,255,255,0.15) 0%,
-      rgba(255,255,255,0.05) 50%,
-      rgba(255,255,255,0.0) 100%
-    );
-  background-size: 2px 60px;
-  background-repeat: repeat;
-  animation: rainFall 0.7s linear infinite;
-  opacity: 0.35;
+  background: radial-gradient(circle, transparent 45%, rgba(0,0,0,.65));
 }
 
-@keyframes rainFall {
-  from { background-position: 0 0; }
-  to { background-position: 0 60px; }
-}
-
-/* ======================
-   CONTENT
-====================== */
+/* CONTENT */
 .content {
   position: relative;
-  z-index: 2;
+  z-index: 10;
   height: 100%;
-  padding: 24px;
+  padding: 72px 24px 24px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
+  text-align: center;
 }
 
-h1 {
-  font-size: 2.8rem;
-  letter-spacing: 4px;
+.title {
+  font-size: clamp(4rem, 14vw, 6.5rem);
+  letter-spacing: 10px;
+  text-shadow:
+    0 0 25px rgba(120,150,255,.7),
+    0 0 60px rgba(170,120,255,.6),
+    0 0 120px rgba(120,140,255,.6);
+  animation: neon 3s ease-in-out infinite;
 }
 
-.tagline {
-  margin-top: 10px;
-  opacity: 0.85;
-  font-size: 1.1rem;
+@keyframes neon {
+  0%,100% {
+    text-shadow:
+      0 0 20px rgba(120,150,255,.6),
+      0 0 50px rgba(170,120,255,.5),
+      0 0 90px rgba(120,140,255,.4);
+  }
+  50% {
+    text-shadow:
+      0 0 40px rgba(180,200,255,.9),
+      0 0 90px rgba(200,140,255,.8),
+      0 0 160px rgba(140,160,255,.8);
+  }
+}
+
+.system-text {
+  margin-top: 14px;
+  font-size: 13px;
+  opacity: .8;
+  line-height: 1.6;
+}
+
+.system-text span {
+  display: block;
+  opacity: .65;
+}
+
+button {
+  margin-top: 32px;
+  padding: 16px 42px;
+  border-radius: 40px;
+  border: none;
+  background: linear-gradient(90deg, #6a5cff, #4facfe);
+  color: white;
+  font-size: 16px;
+  box-shadow: 0 0 35px rgba(120,150,255,.8);
 }
 
 .desc {
-  margin-top: 14px;
-  opacity: 0.7;
-  max-width: 420px;
-}
-
-.start-btn {
-  margin-top: 32px;
-  padding: 16px;
-  border: none;
-  border-radius: 40px;
-  font-size: 16px;
-  color: white;
-  background: linear-gradient(90deg, #6a5cff, #4facfe);
-  box-shadow: 0 0 25px rgba(100,140,255,0.6);
+  margin-top: 18px;
+  max-width: 520px;
+  font-size: 13px;
+  opacity: .55;
 }
