@@ -47,26 +47,49 @@ html, body {
 /* ENERGY GLOW */
 .energy {
   position: absolute;
-  inset: -40%;
+  inset: -50%;
   background:
-    radial-gradient(circle at 30% 50%, rgba(70,120,255,0.6), transparent 45%),
-    radial-gradient(circle at 70% 50%, rgba(170,90,255,0.6), transparent 45%);
-  filter: blur(160px);
-  animation: pulse 6s ease-in-out infinite alternate;
+    radial-gradient(circle at 40% 50%, rgba(70,120,255,0.9), transparent 45%),
+    radial-gradient(circle at 60% 50%, rgba(170,90,255,0.9), transparent 45%);
+  filter: blur(180px);
+  animation: energyPulse 5s ease-in-out infinite;
 }
 
-@keyframes pulse {
-  from { opacity: .4; }
-  to   { opacity: .9; }
+@keyframes energyPulse {
+  0%   { opacity: .4; }
+  50%  { opacity: .95; }
+  100% { opacity: .4; }
 }
 
 /* REAL WATER TEXTURE */
 .water-texture {
   position: absolute;
   inset: 0;
-  background: url("../assets/water-glass.png") center / cover no-repeat;
-  opacity: 0.35;
-  animation: slowDrift 40s linear infinite;
+  background: url("../Assets/water-glass.png") center / cover no-repeat;
+  opacity: 0.38;
+  animation: waterShift 50s ease-in-out infinite alternate;
+}
+.refraction {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 40%, rgba(120,150,255,0.25), transparent 40%),
+    radial-gradient(circle at 70% 60%, rgba(180,120,255,0.25), transparent 40%);
+  filter: blur(60px);
+  animation: refractMove 12s ease-in-out infinite alternate;
+}
+
+@keyframes refractMove {
+  from { transform: translateX(-20px); }
+  to   { transform: translateX(20px); }
+}
+@keyframes waterShift {
+  from {
+    transform: scale(1.02) translateY(0);
+  }
+  to {
+    transform: scale(1.05) translateY(40px);
+  }
 }
 
 @keyframes slowDrift {
