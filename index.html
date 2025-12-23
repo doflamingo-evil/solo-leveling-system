@@ -6,12 +6,11 @@
 <title>Ascension</title>
 
 <style>
-/* ================= RESET ================= */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: system-ui, sans-serif;
 }
 
 html, body {
@@ -22,75 +21,74 @@ html, body {
   color: white;
 }
 
-/* ================= FULL SCREEN ================= */
+/* ===== SCENE ===== */
 .scene {
   position: fixed;
   inset: 0;
+  background: radial-gradient(circle at center, #070c1d, #02030a);
   overflow: hidden;
 }
 
-/* ================= ENERGY GLOW ================= */
+/* ===== ENERGY GLOW ===== */
 .energy {
   position: absolute;
-  inset: -30%;
+  inset: -40%;
   background:
-    radial-gradient(circle at 30% 50%, rgba(70,120,255,0.55), transparent 40%),
-    radial-gradient(circle at 70% 50%, rgba(160,90,255,0.55), transparent 40%),
-    radial-gradient(circle at 50% 60%, rgba(120,120,255,0.25), transparent 50%);
-  filter: blur(140px);
-  animation: energyPulse 6s ease-in-out infinite alternate;
+    radial-gradient(circle at 30% 50%, rgba(70,120,255,0.6), transparent 40%),
+    radial-gradient(circle at 70% 50%, rgba(170,90,255,0.6), transparent 40%);
+  filter: blur(150px);
+  animation: pulse 6s ease-in-out infinite alternate;
 }
 
-@keyframes energyPulse {
-  from { opacity: 0.45; }
-  to   { opacity: 0.9; }
+@keyframes pulse {
+  from { opacity: .4; }
+  to   { opacity: .9; }
 }
 
-/* ================= GLASS ================= */
+/* ===== GLASS ===== */
 .glass {
   position: absolute;
   inset: 0;
-  background: rgba(255,255,255,0.04);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(8px);
 }
 
-/* ================= WATER DROPLETS ================= */
-.droplets {
+/* ===== WATER TEXTURE ===== */
+.water {
   position: absolute;
   inset: 0;
+  background-image: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'>\
+<filter id='blur'><feGaussianBlur stdDeviation='1.5'/></filter>\
+<g filter='url(%23blur)'>\
+<circle cx='60' cy='80' r='6' fill='rgba(255,255,255,0.5)'/>\
+<circle cx='120' cy='200' r='4' fill='rgba(255,255,255,0.35)'/>\
+<circle cx='300' cy='150' r='7' fill='rgba(255,255,255,0.4)'/>\
+<circle cx='220' cy='300' r='5' fill='rgba(255,255,255,0.3)'/>\
+<circle cx='350' cy='60' r='4' fill='rgba(255,255,255,0.35)'/>\
+</g>\
+</svg>");
+  background-size: 280px 280px;
+  opacity: .9;
+  animation: drift 20s linear infinite;
 }
 
-.droplets::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image:
-    radial-gradient(circle at 20% 30%, rgba(255,255,255,.35) 2px, transparent 4px),
-    radial-gradient(circle at 60% 40%, rgba(255,255,255,.25) 3px, transparent 6px),
-    radial-gradient(circle at 40% 70%, rgba(255,255,255,.3) 2px, transparent 5px),
-    radial-gradient(circle at 75% 65%, rgba(255,255,255,.2) 3px, transparent 6px),
-    radial-gradient(circle at 30% 55%, rgba(255,255,255,.25) 2px, transparent 5px);
-  background-size: 220px 220px;
-  animation: moistureDrift 18s linear infinite;
-}
-
-@keyframes moistureDrift {
+@keyframes drift {
   from { transform: translateY(0); }
   to   { transform: translateY(120px); }
 }
 
-/* ================= VIGNETTE ================= */
+/* ===== VIGNETTE ===== */
 .vignette {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle, transparent 50%, rgba(0,0,0,0.6));
+  background: radial-gradient(circle, transparent 50%, rgba(0,0,0,.6));
 }
 
-/* ================= CONTENT ================= */
+/* ===== CONTENT ===== */
 .content {
   position: relative;
-  z-index: 5;
+  z-index: 10;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -100,58 +98,55 @@ html, body {
   padding: 24px;
 }
 
-/* ARISE */
+/* TITLE */
 .title {
-  font-size: clamp(3.5rem, 12vw, 6rem);
-  letter-spacing: 8px;
-  color: #e9ecff;
+  font-size: clamp(4rem, 14vw, 6.5rem);
+  letter-spacing: 10px;
   text-shadow:
-    0 0 20px rgba(120,150,255,.6),
-    0 0 40px rgba(160,120,255,.5),
-    0 0 80px rgba(100,120,255,.4);
-  animation: neonPulse 3s ease-in-out infinite;
+    0 0 25px rgba(120,150,255,.7),
+    0 0 60px rgba(170,120,255,.6),
+    0 0 120px rgba(120,140,255,.6);
+  animation: neon 3s ease-in-out infinite;
 }
 
-@keyframes neonPulse {
+@keyframes neon {
   0%,100% {
     text-shadow:
-      0 0 18px rgba(120,150,255,.6),
-      0 0 36px rgba(160,120,255,.5),
-      0 0 70px rgba(100,120,255,.4);
+      0 0 20px rgba(120,150,255,.6),
+      0 0 50px rgba(170,120,255,.5),
+      0 0 90px rgba(120,140,255,.4);
   }
   50% {
     text-shadow:
-      0 0 30px rgba(160,180,255,.9),
-      0 0 60px rgba(190,140,255,.8),
-      0 0 120px rgba(120,140,255,.7);
+      0 0 40px rgba(180,200,255,.9),
+      0 0 90px rgba(200,140,255,.8),
+      0 0 160px rgba(140,160,255,.8);
   }
 }
 
 .subtitle {
   margin-top: 14px;
-  opacity: 0.75;
+  opacity: .75;
   font-size: 14px;
 }
 
 /* BUTTON */
 button {
   margin-top: 34px;
-  padding: 16px 38px;
+  padding: 16px 42px;
   border-radius: 40px;
   border: none;
   background: linear-gradient(90deg, #6a5cff, #4facfe);
   color: white;
   font-size: 16px;
-  box-shadow:
-    0 0 30px rgba(120,150,255,.7),
-    inset 0 0 12px rgba(255,255,255,.2);
+  box-shadow: 0 0 35px rgba(120,150,255,.8);
 }
 
 .desc {
   margin-top: 18px;
-  font-size: 13px;
   max-width: 480px;
-  opacity: 0.6;
+  font-size: 13px;
+  opacity: .6;
 }
 </style>
 </head>
@@ -161,17 +156,17 @@ button {
 <div class="scene">
   <div class="energy"></div>
   <div class="glass"></div>
-  <div class="droplets"></div>
+  <div class="water"></div>
   <div class="vignette"></div>
 
   <div class="content">
     <h1 class="title">ARISE</h1>
-    <p class="subtitle">You were never weak — the system was dormant.</p>
+    <p class="subtitle">The system has awakened.</p>
 
     <button>GET STARTED</button>
 
     <p class="desc">
-      Ascension transforms discipline, strength, focus, and habits into a real-life
+      Ascension converts discipline, strength and focus into a real-life
       leveling system inspired by hunters and awakening.
     </p>
   </div>
