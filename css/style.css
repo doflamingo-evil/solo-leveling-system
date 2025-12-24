@@ -289,3 +289,73 @@ button {
 .switch:hover {
   color: #cbbcff;
 }
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.hidden {
+  display: none;
+}
+
+.system-card {
+  width: 90%;
+  max-width: 360px;
+  background: rgba(10,15,30,0.95);
+  border: 1px solid #4aa3ff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 0 40px #4aa3ff66;
+  animation: pop 0.4s ease;
+}
+
+@keyframes pop {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.system-title {
+  text-align: center;
+  color: #7ab6ff;
+  margin-bottom: 16px;
+}
+
+.form {
+  display: none;
+}
+
+.form.active {
+  display: block;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  background: #0b1222;
+  border: 1px solid #3a6cff;
+  color: white;
+  border-radius: 6px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background: linear-gradient(90deg,#3a6cff,#6ba8ff);
+  border: none;
+  color: white;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.switch {
+  margin-top: 10px;
+  text-align: center;
+  color: #7ab6ff;
+  cursor: pointer;
+}
