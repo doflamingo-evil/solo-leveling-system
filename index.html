@@ -39,7 +39,7 @@
       <span>• Growth will now be measured</span>
     </div>
 
-    <button>GET STARTED</button>
+    <button class="start-btn" onclick="openSystem()">GET STARTED</button>
 
     <p class="desc">
       Ascension converts discipline, habits, strength and focus
@@ -103,61 +103,41 @@ function openSystem() {
   document.getElementById("systemOverlay").classList.remove("hidden");
 }
 
+/* Switch to CREATE */
 function showCreate() {
   document.getElementById("loginForm").classList.remove("active");
   document.getElementById("createForm").classList.add("active");
 }
 
+/* Switch to LOGIN */
 function showLogin() {
   document.getElementById("createForm").classList.remove("active");
   document.getElementById("loginForm").classList.add("active");
 }
 
+/* LOGIN VALIDATION */
 function login() {
-  const email = loginEmail.value.trim();
-  const pass = loginPassword.value.trim();
+  const email = document.getElementById("loginEmail").value.trim();
+  const pass = document.getElementById("loginPassword").value.trim();
 
   if (!email || !pass) {
     alert("SYSTEM: Input Required");
     return;
   }
 
-  alert("SYSTEM: Login Successful");
-}
-
-function createAccount() {
-  const email = createEmail.value.trim();
-  const pass = createPassword.value.trim();
-
-  if (!email || !pass) {
-    alert("SYSTEM: Input Required");
-    return;
-  }
-
-  alert("SYSTEM: Account Created");
-}
-      </script>
-
-  <script>
-function openSystem() {
-  document.getElementById("systemOverlay").classList.remove("hidden");
-}
-
-function showCreate() {
-  loginForm.classList.remove("active");
-  createForm.classList.add("active");
-}
-
-function showLogin() {
-  createForm.classList.remove("active");
-  loginForm.classList.add("active");
-}
-
-function login() {
   alert("SYSTEM: ACCESS GRANTED");
 }
 
+/* CREATE ACCOUNT VALIDATION */
 function createAccount() {
+  const email = document.getElementById("createEmail").value.trim();
+  const pass = document.getElementById("createPassword").value.trim();
+
+  if (!email || !pass) {
+    alert("SYSTEM: Input Required");
+    return;
+  }
+
   alert("SYSTEM: ACCOUNT CREATED");
 }
   </script>
