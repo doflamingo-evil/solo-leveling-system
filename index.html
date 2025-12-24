@@ -2,167 +2,212 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>Vertex System</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vertex</title>
 
 <style>
 /* RESET */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-body {
-  min-height: 100vh;
-  background: radial-gradient(circle at center, #0b0f2b, #02030f);
-  color: #e8ecff;
-  overflow: hidden;
+body{
+  height:100vh;
+  background: radial-gradient(circle at center, #1a0033, #050010 70%);
+  color:#fff;
+  overflow:hidden;
 }
 
-/* ===== TOP BAR ===== */
-.navbar {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 56px;
-  background: rgba(30, 20, 80, 0.35);
-  backdrop-filter: blur(6px);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 18px;
-  z-index: 10;
+/* TOP BAR */
+.topbar{
+  position:fixed;
+  top:0;
+  width:100%;
+  height:60px;
+  background:rgba(120,0,255,0.15);
+  backdrop-filter: blur(10px);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 20px;
+  z-index:10;
 }
 
-.logo {
-  font-size: 20px;
-  font-weight: 700;
-  color: #9bb2ff;
-  letter-spacing: 1px;
+.logo{
+  font-size:22px;
+  font-weight:700;
+  color:#b66cff;
+  letter-spacing:2px;
 }
 
-.menu {
-  font-size: 22px;
-  cursor: pointer;
+.menu{
+  font-size:26px;
+  cursor:pointer;
 }
 
-/* ===== BACKGROUND GLOW ===== */
-.glow-bg {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 30% 40%, rgba(120,80,255,0.25), transparent 50%),
-    radial-gradient(circle at 70% 60%, rgba(80,160,255,0.25), transparent 50%);
-  animation: slowGlow 10s ease-in-out infinite alternate;
+/* LANDING */
+.landing{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:20px;
 }
 
-@keyframes slowGlow {
-  from { opacity: 0.6; }
-  to { opacity: 1; }
-}
-
-/* ===== HERO ===== */
-.hero {
-  position: relative;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  text-align: center;
-}
-
-/* ARISE TEXT */
-.arise {
-  font-size: 72px;
-  font-weight: 900;
-  letter-spacing: 4px;
-  color: #c9d6ff;
+.arise{
+  font-size:90px;
+  font-weight:900;
+  letter-spacing:6px;
+  color:#c77dff;
   text-shadow:
-    0 0 20px rgba(120,140,255,0.8),
-    0 0 40px rgba(90,120,255,0.6);
-  animation: pulse 2.5s infinite;
+    0 0 20px #9d4edd,
+    0 0 40px #5a189a;
+  animation:pulse 2s infinite;
 }
 
-@keyframes pulse {
-  0%,100% { transform: scale(1); text-shadow: 0 0 20px #7f9cff; }
-  50% { transform: scale(1.05); text-shadow: 0 0 40px #9fb6ff; }
+@keyframes pulse{
+  0%{transform:scale(1); opacity:1;}
+  50%{transform:scale(1.05); opacity:0.85;}
+  100%{transform:scale(1); opacity:1;}
 }
 
-/* QUOTES */
-.quote {
-  margin-top: 12px;
-  font-size: 14px;
-  opacity: 0.85;
+.subtitle{
+  margin-top:10px;
+  font-size:16px;
+  color:#d6c4ff;
+  opacity:0.9;
 }
 
-.motivation {
-  margin-top: 24px;
-  font-size: 20px;
-  font-weight: 600;
-  color: #b5c6ff;
+.start-btn{
+  margin-top:40px;
+  padding:15px 40px;
+  font-size:16px;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  color:#fff;
+  background:linear-gradient(135deg,#7b2cbf,#3a0ca3);
+  box-shadow:0 0 20px rgba(160,80,255,0.7);
+  transition:0.3s;
 }
 
-/* BUTTON */
-.start-btn {
-  margin-top: 26px;
-  padding: 14px 36px;
-  border-radius: 30px;
-  border: none;
-  background: linear-gradient(90deg, #6a5cff, #4facfe);
-  color: white;
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 0 30px rgba(100,140,255,0.7);
-  transition: transform 0.2s;
+.start-btn:hover{
+  transform:scale(1.08);
+  box-shadow:0 0 35px rgba(180,120,255,1);
 }
 
-.start-btn:active {
-  transform: scale(0.96);
+.motivation{
+  margin-top:35px;
+  max-width:600px;
+  font-size:15px;
+  line-height:1.6;
+  color:#cdb4ff;
 }
 
-/* FOOTER MOTIVATION */
-.footer-text {
-  position: absolute;
-  bottom: 26px;
-  font-size: 14px;
-  opacity: 0.7;
+/* OVERLAY */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.75);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:100;
 }
+
+.hidden{display:none;}
+
+/* LOGIN CARD */
+.login-card{
+  width:320px;
+  padding:25px;
+  border-radius:18px;
+  background:rgba(30,0,60,0.85);
+  backdrop-filter: blur(12px);
+  box-shadow:0 0 40px rgba(140,60,255,0.8);
+  animation:pop 0.5s ease;
+}
+
+@keyframes pop{
+  0%{transform:scale(0.6); opacity:0;}
+  100%{transform:scale(1); opacity:1;}
+}
+
+.system-title{
+  text-align:center;
+  margin-bottom:15px;
+  color:#e0aaff;
+  letter-spacing:2px;
+}
+
+/* FORMS */
+.form{display:none;}
+.form.active{display:block;}
+
+input{
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  border:none;
+  border-radius:10px;
+  outline:none;
+  background:rgba(255,255,255,0.1);
+  color:#fff;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border:none;
+  border-radius:20px;
+  cursor:pointer;
+  background:linear-gradient(135deg,#9d4edd,#5a189a);
+  color:#fff;
+  font-weight:600;
+}
+
+.switch{
+  margin-top:12px;
+  text-align:center;
+  font-size:14px;
+  color:#d0bfff;
+  cursor:pointer;
+}
+.switch:hover{text-decoration:underline;}
 </style>
 </head>
 
 <body>
 
-<div class="navbar">
+<!-- TOP BAR -->
+<div class="topbar">
   <div class="logo">VERTEX</div>
   <div class="menu">☰</div>
 </div>
 
-<div class="glow-bg"></div>
-
-<section class="hero">
+<!-- LANDING -->
+<div class="landing">
   <div class="arise">ARISE</div>
-  <div class="quote">You were never weak. You were unawakened.</div>
+  <div class="subtitle">Awaken the system. Rewrite your limits.</div>
 
   <button class="start-btn">GET STARTED</button>
 
   <div class="motivation">
-    Level your discipline. <br>
-    Forge your body. <br>
-    Ascend your life.
+    This system transforms discipline into power.  
+    Every action increases your rank.  
+    Every failure becomes experience.  
+    The only requirement — **never stop progressing**.
   </div>
+</div>
 
-  <div class="footer-text">
-    A system designed to turn effort into power.
-  </div>
-</section>
 <!-- LOGIN OVERLAY -->
 <div id="systemOverlay" class="overlay hidden">
-
   <div class="login-card">
 
     <h2 class="system-title">SYSTEM ACCESS</h2>
@@ -175,7 +220,7 @@ body {
       <p class="switch" onclick="showCreate()">Create new account</p>
     </div>
 
-    <!-- CREATE ACCOUNT -->
+    <!-- CREATE -->
     <div id="createForm" class="form">
       <input id="createEmail" type="email" placeholder="Email">
       <input id="createPassword" type="password" placeholder="Password">
@@ -184,51 +229,55 @@ body {
     </div>
 
   </div>
-
 </div>
-  <script>
-/* OPEN SYSTEM */
-document.querySelector(".start-btn").addEventListener("click", () => {
-  document.getElementById("systemOverlay").classList.remove("hidden");
+
+<script>
+document.addEventListener("DOMContentLoaded",()=>{
+
+  const startBtn = document.querySelector(".start-btn");
+  const overlay = document.getElementById("systemOverlay");
+
+  startBtn.addEventListener("click",()=>{
+    overlay.classList.remove("hidden");
+  });
+
 });
 
 /* SWITCH FORMS */
-function showCreate() {
+function showCreate(){
   document.getElementById("loginForm").classList.remove("active");
   document.getElementById("createForm").classList.add("active");
 }
 
-function showLogin() {
+function showLogin(){
   document.getElementById("createForm").classList.remove("active");
   document.getElementById("loginForm").classList.add("active");
 }
 
 /* LOGIN */
-function login() {
-  const email = loginEmail.value.trim();
-  const pass = loginPassword.value.trim();
+function login(){
+  const e = loginEmail.value.trim();
+  const p = loginPassword.value.trim();
 
-  if (!email || !pass) {
+  if(!e || !p){
     alert("SYSTEM: INPUT REQUIRED");
     return;
   }
-
   alert("SYSTEM: ACCESS GRANTED");
 }
 
 /* CREATE */
-function createAccount() {
-  const email = createEmail.value.trim();
-  const pass = createPassword.value.trim();
+function createAccount(){
+  const e = createEmail.value.trim();
+  const p = createPassword.value.trim();
 
-  if (!email || !pass) {
+  if(!e || !p){
     alert("SYSTEM: INPUT REQUIRED");
     return;
   }
-
   alert("SYSTEM: ACCOUNT CREATED");
 }
-  </script>
+</script>
 
 </body>
 </html>
