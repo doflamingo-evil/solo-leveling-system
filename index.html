@@ -186,5 +186,48 @@ body {
   </div>
 
 </div>
+<script>
+/* OPEN SYSTEM */
+document.querySelector(".start-btn").addEventListener("click", () => {
+  document.getElementById("systemOverlay").classList.remove("hidden");
+});
+
+/* SWITCH FORMS */
+function showCreate() {
+  document.getElementById("loginForm").classList.remove("active");
+  document.getElementById("createForm").classList.add("active");
+}
+
+function showLogin() {
+  document.getElementById("createForm").classList.remove("active");
+  document.getElementById("loginForm").classList.add("active");
+}
+
+/* LOGIN */
+function login() {
+  const email = loginEmail.value.trim();
+  const pass = loginPassword.value.trim();
+
+  if (!email || !pass) {
+    alert("SYSTEM: INPUT REQUIRED");
+    return;
+  }
+
+  alert("SYSTEM: ACCESS GRANTED");
+}
+
+/* CREATE */
+function createAccount() {
+  const email = createEmail.value.trim();
+  const pass = createPassword.value.trim();
+
+  if (!email || !pass) {
+    alert("SYSTEM: INPUT REQUIRED");
+    return;
+  }
+
+  alert("SYSTEM: ACCOUNT CREATED");
+}
+</script>
 </body>
 </html>
