@@ -160,6 +160,31 @@ body {
     A system designed to turn effort into power.
   </div>
 </section>
+<!-- LOGIN OVERLAY -->
+<div id="systemOverlay" class="overlay hidden">
 
+  <div class="login-card">
+
+    <h2 class="system-title">SYSTEM ACCESS</h2>
+
+    <!-- LOGIN -->
+    <div id="loginForm" class="form active">
+      <input id="loginEmail" type="email" placeholder="Email">
+      <input id="loginPassword" type="password" placeholder="Password">
+      <button onclick="login()">LOGIN</button>
+      <p class="switch" onclick="showCreate()">Create new account</p>
+    </div>
+
+    <!-- CREATE ACCOUNT -->
+    <div id="createForm" class="form">
+      <input id="createEmail" type="email" placeholder="Email">
+      <input id="createPassword" type="password" placeholder="Password">
+      <button onclick="createAccount()">CREATE</button>
+      <p class="switch" onclick="showLogin()">I already have an account</p>
+    </div>
+
+  </div>
+
+</div>
 </body>
 </html>
