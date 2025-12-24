@@ -137,5 +137,29 @@ function createAccount() {
   alert("SYSTEM: Account Created");
 }
       </script>
+
+  <script>
+function openSystem() {
+  document.getElementById("systemOverlay").classList.remove("hidden");
+}
+
+function showCreate() {
+  loginForm.classList.remove("active");
+  createForm.classList.add("active");
+}
+
+function showLogin() {
+  createForm.classList.remove("active");
+  loginForm.classList.add("active");
+}
+
+function login() {
+  alert("SYSTEM: ACCESS GRANTED");
+}
+
+function createAccount() {
+  alert("SYSTEM: ACCOUNT CREATED");
+}
+  </script>
 </body>
 </html>
