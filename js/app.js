@@ -3,7 +3,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const overlay = document.getElementById("systemOverlay");
 
   startBtn.addEventListener("click", () => {
-    overlay.classList.remove("hidden");
+    // Screen shake
+    document.body.classList.add("shake");
+
+    // Remove shake after animation
+    setTimeout(() => {
+      document.body.classList.remove("shake");
+    }, 500);
+
+    // Open login after slight delay
+    setTimeout(() => {
+      overlay.classList.remove("hidden");
+    }, 120);
   });
 });
 
