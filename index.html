@@ -73,7 +73,32 @@
 
   </div>
 </div>
-<script>
+<div id="systemOverlay" class="overlay hidden">
+
+  <div class="system-card">
+
+    <h2 class="system-title">SYSTEM LOGIN</h2>
+
+    <!-- LOGIN FORM -->
+    <div id="loginForm" class="form active">
+      <input id="loginEmail" type="email" placeholder="Email">
+      <input id="loginPassword" type="password" placeholder="Password">
+      <button onclick="login()">LOGIN</button>
+      <p class="switch" onclick="showCreate()">Create new account</p>
+    </div>
+
+    <!-- CREATE FORM -->
+    <div id="createForm" class="form">
+      <input id="createEmail" type="email" placeholder="Email">
+      <input id="createPassword" type="password" placeholder="Password">
+      <button onclick="createAccount()">CREATE</button>
+      <p class="switch" onclick="showLogin()">I already have an account</p>
+    </div>
+
+  </div>
+
+</div>
+  <script>
 function openSystem() {
   document.getElementById("systemOverlay").classList.remove("hidden");
 }
