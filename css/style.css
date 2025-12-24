@@ -359,3 +359,80 @@ button {
   color: #7ab6ff;
   cursor: pointer;
 }
+/* ===== LOGIN POPUP ===== */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5,8,20,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.hidden {
+  display: none;
+}
+
+.login-card {
+  width: 90%;
+  max-width: 360px;
+  padding: 26px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #0b102a, #050817);
+  border: 1px solid rgba(120,150,255,0.6);
+  box-shadow:
+    0 0 30px rgba(100,140,255,0.6),
+    inset 0 0 20px rgba(80,120,255,0.2);
+  animation: popIn 0.4s ease;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.7); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.system-title {
+  text-align: center;
+  margin-bottom: 18px;
+  color: #9bb6ff;
+  letter-spacing: 1px;
+}
+
+.form {
+  display: none;
+}
+
+.form.active {
+  display: block;
+}
+
+.login-card input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 14px;
+  border-radius: 8px;
+  border: 1px solid #3f5cff;
+  background: #080d25;
+  color: #fff;
+}
+
+.login-card button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(90deg,#586cff,#6fa8ff);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(120,150,255,0.6);
+}
+
+.switch {
+  margin-top: 14px;
+  text-align: center;
+  color: #8fa8ff;
+  font-size: 14px;
+  cursor: pointer;
+}
