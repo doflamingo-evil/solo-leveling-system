@@ -1,20 +1,30 @@
 document.addEventListener("DOMContentLoaded", () => {
   const startBtn = document.querySelector(".start-btn");
   const overlay = document.getElementById("systemOverlay");
+  const popup = document.querySelector(".system-card");
 
   startBtn.addEventListener("click", () => {
-    // Screen shake
+
+    // 1️⃣ Slow-motion zoom on whole screen
+    document.body.classList.add("system-zoom");
+
+    // 2️⃣ Screen shake (from previous step)
     document.body.classList.add("shake");
 
-    // Remove shake after animation
     setTimeout(() => {
       document.body.classList.remove("shake");
-    }, 500);
+    }, 450);
 
-    // Open login after slight delay
+    // 3️⃣ Open popup slightly after zoom starts
     setTimeout(() => {
       overlay.classList.remove("hidden");
-    }, 120);
+      popup.classList.add("system-popup");
+    }, 280);
+
+    // Cleanup zoom class
+    setTimeout(() => {
+      document.body.classList.remove("system-zoom");
+    }, 700);
   });
 });
 
