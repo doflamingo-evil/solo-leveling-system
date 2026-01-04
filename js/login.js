@@ -59,16 +59,10 @@ function login() {
     return;
   }
 
-  // ✅ mark user as logged in
+  // ✅ SESSION CREATED
   localStorage.setItem("loggedIn", "true");
 
   alert("SYSTEM: ACCESS GRANTED");
-  window.location.href = "chambers.html";
-}
-
-  alert("SYSTEM: ACCESS GRANTED");
-
-  // redirect to home / chambers
   window.location.href = "chambers.html";
 }
 
