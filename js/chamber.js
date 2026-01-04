@@ -21,3 +21,7 @@ function completeQuest(xp) {
   localStorage.setItem("hunter", JSON.stringify(hunter));
   alert("SYSTEM: QUEST COMPLETED");
 }
+function logout() {
+  localStorage.removeItem("loggedIn");
+  window.location.href = "index.html";
+}
