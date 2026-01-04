@@ -45,28 +45,33 @@ function showLogin() {
   document.getElementById("createForm").classList.remove("active");
   document.getElementById("loginForm").classList.add("active");
 }
+function showDenied() {
+  const denied = document.getElementById("deniedOverlay");
+  denied.classList.remove("hidden");
+
+  setTimeout(() => {
+    denied.classList.add("hidden");
+  }, 1800);
+}
+
 function login() {
   const email = loginEmail.value.trim();
   const pass = loginPassword.value.trim();
 
-  const savedAccount = localStorage.getItem("hunterAccount");
-
-  if (!savedAccount) {
-    alert("SYSTEM: NO ACCOUNT FOUND");
+  const saved = localStorage.getItem("hunterAccount");
+  if (!saved) {
+    showDenied();
     return;
   }
 
-  const account = JSON.parse(savedAccount);
+  const acc = JSON.parse(saved);
 
-  if (email !== account.email || pass !== account.password) {
-    alert("SYSTEM: ACCESS DENIED");
+  if (email !== acc.email || pass !== acc.password) {
+    showDenied();
     return;
   }
 
-  // ✅ SESSION CREATED
   localStorage.setItem("loggedIn", "true");
-
-  alert("SYSTEM: ACCESS GRANTED");
   window.location.href = "chambers.html";
 }
 
