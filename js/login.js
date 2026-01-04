@@ -1,3 +1,7 @@
+// AUTO LOGIN CHECK
+if (localStorage.getItem("loggedIn") === "true") {
+  window.location.href = "chambers.html";
+}
 document.addEventListener("DOMContentLoaded", () => {
   const startBtn = document.querySelector(".start-btn");
   const overlay = document.getElementById("systemOverlay");
