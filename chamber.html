@@ -1,1 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vertex | Chambers</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/chambers.css">
+</head>
+<body>
 
+<header class="top-bar">
+  <div class="logo">VERTEX</div>
+  <div class="menu">☰</div>
+</header>
+
+<section class="chamber-tabs">
+  <button class="tab active" onclick="openChamber('strength')">Strength</button>
+  <button class="tab" onclick="openChamber('vitality')">Vitality</button>
+  <button class="tab" onclick="openChamber('discipline')">Discipline</button>
+</section>
+
+<!-- STRENGTH -->
+<section id="strength" class="chamber active">
+  <h2>💪 Strength Chamber</h2>
+  <p>Complete physical trials to grow stronger.</p>
+
+  <button onclick="gainStatXP('strength',30)">Workout Completed (+30 XP)</button>
+</section>
+
+<!-- VITALITY -->
+<section id="vitality" class="chamber">
+  <h2>❤️ Vitality Chamber</h2>
+  <p>Recover, rest, and regenerate.</p>
+
+  <button onclick="gainStatXP('vitality',20)">Sleep Logged (+20 XP)</button>
+</section>
+
+<!-- DISCIPLINE -->
+<section id="discipline" class="chamber">
+  <h2>🧠 Discipline Chamber</h2>
+  <p>Control the mind. Build consistency.</p>
+
+  <ul class="quests">
+    <li><button onclick="completeQuest(15)">Wake before 7 AM</button></li>
+    <li><button onclick="completeQuest(10)">Make Bed</button></li>
+    <li><button onclick="completeQuest(20)">No Social Media (1h)</button></li>
+  </ul>
+</section>
+
+<script src="js/chambers.js"></script>
+</body>
+</html>
