@@ -59,6 +59,13 @@ function login() {
     return;
   }
 
+  // ✅ mark user as logged in
+  localStorage.setItem("loggedIn", "true");
+
+  alert("SYSTEM: ACCESS GRANTED");
+  window.location.href = "chambers.html";
+}
+
   alert("SYSTEM: ACCESS GRANTED");
 
   // redirect to home / chambers
