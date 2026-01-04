@@ -1,1 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vertex | Hunter Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="top-bar">
+  <div class="logo">VERTEX</div>
+  <div class="menu">☰</div>
+</header>
+
+<!-- PROFILE CARD -->
+<section class="profile-card">
+  <div class="rank" id="rank">E-RANK</div>
+  <h1 id="hunterName">HUNTER</h1>
+
+  <div class="level-box">
+    <span>LEVEL <b id="level">1</b></span>
+    <div class="xp-bar">
+      <div class="xp-fill" id="xpFill"></div>
+    </div>
+    <small><span id="xp">0</span> / <span id="xpMax">100</span> XP</small>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stat">💪 Strength <span id="str">1</span></div>
+  <div class="stat">❤️ Vitality <span id="vit">1</span></div>
+  <div class="stat">🧠 Discipline <span id="dis">1</span></div>
+</section>
+
+<!-- TRAIN BUTTON -->
+<button class="train-btn" onclick="gainXP()">TRAIN (+25 XP)</button>
+
+<script src="js/home.js"></script>
+</body>
+</html>
