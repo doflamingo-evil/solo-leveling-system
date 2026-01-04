@@ -41,16 +41,28 @@ function showLogin() {
   document.getElementById("createForm").classList.remove("active");
   document.getElementById("loginForm").classList.add("active");
 }
-
 function login() {
   const email = loginEmail.value.trim();
   const pass = loginPassword.value.trim();
 
-  if (!email || !pass) {
-    alert("SYSTEM: INPUT REQUIRED");
+  const savedAccount = localStorage.getItem("hunterAccount");
+
+  if (!savedAccount) {
+    alert("SYSTEM: NO ACCOUNT FOUND");
     return;
   }
+
+  const account = JSON.parse(savedAccount);
+
+  if (email !== account.email || pass !== account.password) {
+    alert("SYSTEM: ACCESS DENIED");
+    return;
+  }
+
   alert("SYSTEM: ACCESS GRANTED");
+
+  // redirect to home / chambers
+  window.location.href = "chambers.html";
 }
 
 function createAccount() {
@@ -58,8 +70,29 @@ function createAccount() {
   const pass = createPassword.value.trim();
 
   if (!email || !pass) {
-    alert("SYSTEM: INPUT REQUIRED");
+    alert("SYSTEM: Input Required");
     return;
   }
+
+  if (!email.includes("@")) {
+    alert("SYSTEM: Invalid Email");
+    return;
+  }
+
+  // save account locally
+  const account = {
+    email: email,
+    password: pass,
+    xp: 0,
+    stats: {
+      strength: 1,
+      vitality: 1,
+      discipline: 1
+    }
+  };
+
+  localStorage.setItem("hunterAccount", JSON.stringify(account));
+
   alert("SYSTEM: ACCOUNT CREATED");
+  showLogin();
 }
