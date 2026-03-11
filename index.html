@@ -4,13 +4,14 @@
 <meta charset="UTF-8">
 <title>Vertex System</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Exo 2', sans-serif;
 }
 
 body{
@@ -52,18 +53,56 @@ body::before{
   justify-content:space-between;
   padding:0 20px;
   z-index:10;
+  border-bottom: 1px solid rgba(157,78,221,0.2);
 }
 
 .logo{
-  font-size:22px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size:24px;
   font-weight:700;
-  color:#ffffff; /* WHITE as requested */
-  letter-spacing:2px;
+  color:#ffffff;
+  letter-spacing:4px;
 }
 
-.menu{
+.menu-icon{
   font-size:26px;
   cursor:pointer;
+  transition:0.2s;
+}
+.menu-icon:hover{ color:#c77dff; }
+
+/* === HAMBURGER DROPDOWN === */
+.dropdown{
+  position:fixed;
+  top:60px;
+  right:0;
+  width:200px;
+  background:rgba(10,0,30,0.95);
+  backdrop-filter:blur(20px);
+  border-left:1px solid rgba(157,78,221,0.3);
+  border-bottom:1px solid rgba(157,78,221,0.3);
+  border-radius:0 0 0 12px;
+  z-index:200;
+  overflow:hidden;
+  transform:translateX(100%);
+  transition:transform 0.3s ease;
+}
+.dropdown.open{ transform:translateX(0); }
+
+.dropdown a{
+  display:block;
+  padding:15px 20px;
+  color:#d0bfff;
+  text-decoration:none;
+  font-size:14px;
+  letter-spacing:1px;
+  border-bottom:1px solid rgba(157,78,221,0.1);
+  transition:0.2s;
+}
+.dropdown a:hover{
+  background:rgba(157,78,221,0.15);
+  color:#fff;
+  padding-left:28px;
 }
 
 /* === LANDING === */
@@ -78,9 +117,10 @@ body::before{
 }
 
 .arise{
+  font-family: 'Rajdhani', sans-serif;
   font-size:90px;
-  font-weight:900;
-  letter-spacing:6px;
+  font-weight:700;
+  letter-spacing:10px;
   color:#c77dff;
   text-shadow:
     0 0 25px #9d4edd,
@@ -89,21 +129,25 @@ body::before{
 }
 
 @keyframes pulse{
-  0%{transform:scale(1);}
-  50%{transform:scale(1.06);}
-  100%{transform:scale(1);}
+  0%{transform:scale(1); text-shadow:0 0 25px #9d4edd, 0 0 60px #5a189a;}
+  50%{transform:scale(1.06); text-shadow:0 0 40px #c77dff, 0 0 90px #7b2cbf;}
+  100%{transform:scale(1); text-shadow:0 0 25px #9d4edd, 0 0 60px #5a189a;}
 }
 
 .subtitle{
   margin-top:10px;
   font-size:16px;
   color:#d6c4ff;
+  letter-spacing:2px;
 }
 
 .start-btn{
   margin-top:40px;
   padding:15px 40px;
   font-size:16px;
+  font-family:'Rajdhani',sans-serif;
+  font-weight:700;
+  letter-spacing:3px;
   border:none;
   border-radius:30px;
   cursor:pointer;
@@ -122,8 +166,9 @@ body::before{
   margin-top:35px;
   max-width:600px;
   font-size:15px;
-  line-height:1.6;
+  line-height:1.8;
   color:#cdb4ff;
+  opacity:0.85;
 }
 
 /* === OVERLAY === */
@@ -139,12 +184,26 @@ body::before{
 
 .hidden{display:none;}
 
+/* === SCREEN SHAKE === */
+@keyframes shake{
+  0%{transform:translate(0);}
+  10%{transform:translate(-6px,6px);}
+  20%{transform:translate(6px,-6px);}
+  30%{transform:translate(-6px,0);}
+  40%{transform:translate(6px,6px);}
+  50%{transform:translate(-4px,-4px);}
+  60%{transform:translate(4px,4px);}
+  70%{transform:translate(-2px,2px);}
+  100%{transform:translate(0);}
+}
+body.shake{ animation:shake 0.5s ease; }
+
 /* === LOGIN CARD === */
 .login-card{
   width:320px;
-  padding:25px;
+  padding:30px 25px;
   border-radius:18px;
-  background:rgba(20,0,40,0.9);
+  background:rgba(20,0,40,0.92);
   backdrop-filter: blur(15px);
   box-shadow:
     0 0 40px rgba(140,60,255,0.8),
@@ -153,7 +212,6 @@ body::before{
   position:relative;
 }
 
-/* glow wave */
 .login-card::after{
   content:"";
   position:absolute;
@@ -175,7 +233,9 @@ body::before{
   text-align:center;
   margin-bottom:15px;
   color:#e0aaff;
-  letter-spacing:2px;
+  letter-spacing:3px;
+  font-family:'Rajdhani',sans-serif;
+  font-size:20px;
 }
 
 /* === FORMS === */
@@ -184,35 +244,106 @@ body::before{
 
 input{
   width:100%;
-  padding:12px;
-  margin:10px 0;
-  border:none;
+  padding:12px 15px;
+  margin:8px 0;
+  border:1px solid rgba(157,78,221,0.3);
   border-radius:10px;
   outline:none;
-  background:rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.07);
   color:#fff;
+  font-size:14px;
+  transition:0.2s;
 }
+input:focus{
+  border-color:#9d4edd;
+  background:rgba(157,78,221,0.1);
+}
+input::placeholder{ color:rgba(255,255,255,0.35); }
 
 button{
   width:100%;
   padding:12px;
-  margin-top:10px;
+  margin-top:12px;
   border:none;
   border-radius:20px;
   cursor:pointer;
   background:linear-gradient(135deg,#9d4edd,#5a189a);
   color:#fff;
-  font-weight:600;
+  font-weight:700;
+  font-family:'Rajdhani',sans-serif;
+  font-size:15px;
+  letter-spacing:2px;
+  transition:0.2s;
+}
+button:hover{
+  box-shadow:0 0 20px rgba(157,78,221,0.8);
+  transform:scale(1.02);
 }
 
 .switch{
   margin-top:12px;
   text-align:center;
-  font-size:14px;
+  font-size:13px;
   color:#d0bfff;
   cursor:pointer;
 }
-.switch:hover{text-decoration:underline;}
+.switch:hover{text-decoration:underline; color:#fff;}
+
+/* === SYSTEM MESSAGE === */
+.sys-msg{
+  margin-top:10px;
+  text-align:center;
+  font-size:13px;
+  font-family:'Rajdhani',sans-serif;
+  letter-spacing:1px;
+  min-height:18px;
+}
+.sys-msg.error{ color:#ff6b6b; }
+.sys-msg.success{ color:#7efff5; }
+
+/* === ACCESS DENIED === */
+#deniedOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.9);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:300;
+  flex-direction:column;
+}
+.denied-box{
+  text-align:center;
+}
+.denied-box h1{
+  font-family:'Rajdhani',sans-serif;
+  font-size:20px;
+  color:#9d4edd;
+  letter-spacing:4px;
+  margin-bottom:10px;
+}
+.denied-box .glitch{
+  font-family:'Rajdhani',sans-serif;
+  font-size:48px;
+  font-weight:700;
+  color:#ff4444;
+  text-shadow:0 0 30px #ff0000;
+  letter-spacing:5px;
+  animation:glitchAnim 0.8s ease forwards;
+}
+@keyframes glitchAnim{
+  0%{opacity:0; transform:skewX(20deg) scale(1.2);}
+  30%{opacity:1; transform:skewX(-5deg);}
+  60%{transform:skewX(3deg);}
+  100%{transform:skewX(0);}
+}
+.denied-box span{
+  display:block;
+  margin-top:10px;
+  color:#ff9999;
+  font-size:14px;
+  letter-spacing:3px;
+}
 </style>
 </head>
 
@@ -221,7 +352,14 @@ button{
 <!-- TOP BAR -->
 <div class="topbar">
   <div class="logo">VERTEX</div>
-  <div class="menu">☰</div>
+  <div class="menu-icon" onclick="toggleMenu()">☰</div>
+</div>
+
+<!-- DROPDOWN MENU -->
+<div id="dropdownMenu" class="dropdown">
+  <a href="#" onclick="openLogin(); closeMenu();">⚡ Login</a>
+  <a href="#">ℹ About Vertex</a>
+  <a href="#">❓ Help</a>
 </div>
 
 <!-- LANDING -->
@@ -229,11 +367,11 @@ button{
   <div class="arise">ARISE</div>
   <div class="subtitle">Awaken the system. Rewrite your limits.</div>
 
-  <button class="start-btn">GET STARTED</button>
+  <button class="start-btn" onclick="openLogin()">GET STARTED</button>
 
   <div class="motivation">
-    Discipline is power.  
-    Consistency is evolution.  
+    Discipline is power.<br>
+    Consistency is evolution.<br>
     The system rewards only those who rise.
   </div>
 </div>
@@ -242,65 +380,164 @@ button{
 <div id="systemOverlay" class="overlay hidden">
   <div class="login-card">
 
-    <h2 class="system-title">SYSTEM ACCESS</h2>
+    <h2 class="system-title">⚡ SYSTEM ACCESS</h2>
 
+    <!-- LOGIN FORM -->
     <div id="loginForm" class="form active">
-      <input id="loginEmail" type="email" placeholder="Email">
-      <input id="loginPassword" type="password" placeholder="Password">
+      <input id="loginEmail" type="email" placeholder="Enter Email">
+      <input id="loginPassword" type="password" placeholder="Enter Password">
       <button onclick="login()">LOGIN</button>
-      <p class="switch" onclick="showCreate()">Create new account</p>
+      <div id="loginMsg" class="sys-msg"></div>
+      <p class="switch" onclick="showCreate()">Create new account →</p>
     </div>
 
+    <!-- CREATE ACCOUNT FORM -->
     <div id="createForm" class="form">
-      <input id="createEmail" type="email" placeholder="Email">
-      <input id="createPassword" type="password" placeholder="Password">
-      <button onclick="createAccount()">CREATE</button>
-      <p class="switch" onclick="showLogin()">I already have an account</p>
+      <input id="createEmail" type="email" placeholder="Enter Email">
+      <input id="createPassword" type="password" placeholder="Create Password">
+      <button onclick="createAccount()">CREATE ACCOUNT</button>
+      <div id="createMsg" class="sys-msg"></div>
+      <p class="switch" onclick="showLogin()">← Already have an account</p>
     </div>
 
   </div>
 </div>
 
-<script>
-document.addEventListener("DOMContentLoaded",()=>{
-  document.querySelector(".start-btn").onclick = () => {
-    document.getElementById("systemOverlay").classList.remove("hidden");
-  };
-});
-
-function showCreate(){
-  loginForm.classList.remove("active");
-  createForm.classList.add("active");
-}
-
-function showLogin(){
-  createForm.classList.remove("active");
-  loginForm.classList.add("active");
-}
-
-function login(){
-  if(!loginEmail.value || !loginPassword.value){
-    alert("SYSTEM: INPUT REQUIRED");
-    return;
-  }
-  alert("SYSTEM: ACCESS GRANTED");
-}
-
-function createAccount(){
-  if(!createEmail.value || !createPassword.value){
-    alert("SYSTEM: INPUT REQUIRED");
-    return;
-  }
-  alert("SYSTEM: ACCOUNT CREATED");
-}
-</script>
 <!-- ACCESS DENIED OVERLAY -->
-<div id="deniedOverlay" class="denied hidden">
+<div id="deniedOverlay" class="hidden">
   <div class="denied-box">
     <h1>SYSTEM</h1>
     <p class="glitch">ACCESS DENIED</p>
     <span>INVALID CREDENTIALS</span>
   </div>
 </div>
+
+<script>
+// ===== MENU =====
+function toggleMenu(){
+  document.getElementById('dropdownMenu').classList.toggle('open');
+}
+function closeMenu(){
+  document.getElementById('dropdownMenu').classList.remove('open');
+}
+document.addEventListener('click', function(e){
+  if(!e.target.closest('.menu-icon') && !e.target.closest('.dropdown')){
+    closeMenu();
+  }
+});
+
+// ===== OPEN LOGIN =====
+function openLogin(){
+  // Screen shake
+  document.body.classList.add('shake');
+  setTimeout(()=> document.body.classList.remove('shake'), 500);
+  document.getElementById('systemOverlay').classList.remove('hidden');
+}
+
+// ===== FORM SWITCH =====
+function showCreate(){
+  document.getElementById('loginForm').classList.remove('active');
+  document.getElementById('createForm').classList.add('active');
+  document.getElementById('createMsg').textContent = '';
+}
+
+function showLogin(){
+  document.getElementById('createForm').classList.remove('active');
+  document.getElementById('loginForm').classList.add('active');
+  document.getElementById('loginMsg').textContent = '';
+}
+
+// ===== CREATE ACCOUNT =====
+function createAccount(){
+  const email = document.getElementById('createEmail').value.trim();
+  const password = document.getElementById('createPassword').value.trim();
+  const msg = document.getElementById('createMsg');
+
+  if(!email || !password){
+    msg.className = 'sys-msg error';
+    msg.textContent = 'SYSTEM: ALL FIELDS REQUIRED';
+    return;
+  }
+
+  if(password.length < 6){
+    msg.className = 'sys-msg error';
+    msg.textContent = 'SYSTEM: PASSWORD TOO SHORT (MIN 6)';
+    return;
+  }
+
+  // Check if account already exists
+  const existing = localStorage.getItem('vertex_user_' + email);
+  if(existing){
+    msg.className = 'sys-msg error';
+    msg.textContent = 'SYSTEM: ACCOUNT ALREADY EXISTS';
+    return;
+  }
+
+  // Save account
+  localStorage.setItem('vertex_user_' + email, password);
+
+  msg.className = 'sys-msg success';
+  msg.textContent = 'SYSTEM: ACCOUNT CREATED ✓';
+
+  // Auto switch to login after 1.2s
+  setTimeout(()=>{
+    document.getElementById('createEmail').value = '';
+    document.getElementById('createPassword').value = '';
+    showLogin();
+    document.getElementById('loginMsg').className = 'sys-msg success';
+    document.getElementById('loginMsg').textContent = 'SYSTEM: NOW LOG IN TO ENTER';
+  }, 1200);
+}
+
+// ===== LOGIN =====
+function login(){
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value.trim();
+  const msg = document.getElementById('loginMsg');
+
+  if(!email || !password){
+    msg.className = 'sys-msg error';
+    msg.textContent = 'SYSTEM: INPUT REQUIRED';
+    return;
+  }
+
+  const savedPassword = localStorage.getItem('vertex_user_' + email);
+
+  if(!savedPassword){
+    showDenied();
+    msg.className = 'sys-msg error';
+    msg.textContent = 'SYSTEM: NO ACCOUNT FOUND';
+    return;
+  }
+
+  if(savedPassword !== password){
+    showDenied();
+    msg.className = 'sys-msg error';
+    msg.textContent = 'SYSTEM: WRONG PASSWORD';
+    return;
+  }
+
+  // Success — save session and redirect
+  localStorage.setItem('vertex_session', email);
+  msg.className = 'sys-msg success';
+  msg.textContent = 'SYSTEM: ACCESS GRANTED ✓';
+
+  setTimeout(()=>{
+    window.location.href = 'home.html';
+  }, 1000);
+}
+
+// ===== ACCESS DENIED FLASH =====
+function showDenied(){
+  const overlay = document.getElementById('deniedOverlay');
+  overlay.classList.remove('hidden');
+  // Screen shake
+  document.body.classList.add('shake');
+  setTimeout(()=> document.body.classList.remove('shake'), 500);
+  setTimeout(()=> overlay.classList.add('hidden'), 1800);
+}
+</script>
+
 </body>
 </html>
+
